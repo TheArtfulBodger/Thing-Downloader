@@ -5,12 +5,11 @@
 
 namespace td {
 
-using buffer = std::vector<unsigned char>; /*!< @brief typedef for a binary buffer object*/ 
+using buffer = std::vector<unsigned char>; /*!< @brief typedef for a binary buffer object*/
 
 /*! @brief Abstract class representing a job*/
 class job_base {
 public:
-
     /*!
      * @brief Get the job's data
      * @return MsgPack buffer for the job
@@ -41,7 +40,6 @@ public:
 /*! @brief Abstract class representing the downloader.*/
 class downloader_base {
 public:
-
     /*!
      * @brief Adds a jon object to the queue
      * @param key `std::string` *Unique* string representing the downloader (preferrably a product ID and not a URL)
@@ -73,24 +71,20 @@ public:
 
     /*!
      * @brief Get the outpath directory to write downloads to.
-     * @return `std::string` the path to the output directory 
+     * @return `std::string` the path to the output directory
      */
     virtual std::string get_outpath_folder() = 0;
 };
 
-using job = std::shared_ptr<job_base>; /*!< @brief Alias for a job object pointer*/ 
-using dl = std::shared_ptr<downloader_base>; /*!< @brief Alias for a pointer to the downloader*/ 
+using job = std::shared_ptr<job_base>; /*!< @brief Alias for a job object pointer*/
+using dl = std::shared_ptr<downloader_base>; /*!< @brief Alias for a pointer to the downloader*/
 }
-
-
-
 
 extern "C" {
 // List of Symbols required for a plugin
-// TODO: Make the linker error if one or more is missing
 
 /*! @brief *Unique* identifier of the plugin. Should only contain lowercase letters, numbers and hyphens.*/
-extern std::string key; 
+extern std::string key;
 
 /*! @brief Name of the plugin in the UI, can contain any characters. */
 extern std::string name;
@@ -125,8 +119,8 @@ void process_job(const td::dl& base, const td::job& job);
  * @brief Checks if the job has been previously executed to avoid redownloading files that already exists.
  * @param base Smart pointer to the base downloader object (td::downloader_base)
  * @param job Smart pointer to the job object (td::job_base)
- * @return `false` If the job should continue  
- * @return `true` If the job has been executed succesfuly previously 
+ * @return `false` If the job should continue
+ * @return `true` If the job has been executed succesfuly previously
  */
 bool should_skip(const td::dl& base, const td::job& job);
 }
