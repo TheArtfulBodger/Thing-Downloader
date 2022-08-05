@@ -1,6 +1,6 @@
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = "Thing Downloader"
-INPUT                  = ../pluginspec
+INPUT                  = ../pluginspec ../plugins
 INPUT_ENCODING         = UTF-8
 GENERATE_XML           = YES
 XML_OUTPUT             = _xml

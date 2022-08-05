@@ -11,6 +11,7 @@ Welcome to Thing Downloader's documentation!
    :caption: Contents:
 
    api/index
+   plugins/index
 
 
 
