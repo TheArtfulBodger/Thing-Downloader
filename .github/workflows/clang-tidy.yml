@@ -24,6 +24,8 @@ jobs:
 
     - uses: ZedThree/clang-tidy-review@v0.9.0
       id: review
+      with:
+        build_dir: ./build
     # If there are any comments, fail the check
     - if: steps.review.outputs.total_comments > 0
       run: exit 1
