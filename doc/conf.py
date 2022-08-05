@@ -32,4 +32,4 @@ breathe_default_project = "ThingDownloader"
 
 # -- Build Doxygen Documentation ---------------------------------------------
 import subprocess
-subprocess.call('cd .. ; doxygen', shell=True)
+subprocess.call('doxygen', shell=True)
