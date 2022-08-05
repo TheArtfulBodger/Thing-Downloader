@@ -6,7 +6,7 @@
 
 namespace td {
 /*!
- * @brief Plugin class, contains nice wrapper of functions and members loaded in from their dynamic library 
+ * @brief Plugin class, contains nice wrapper of functions and members loaded in from their dynamic library
  */
 class plugin : std::enable_shared_from_this<plugin> {
 public:
@@ -20,7 +20,7 @@ public:
 
     /*! @brief  Description of the plugin for the UI */
     std::string description;
-    
+
     /*! @brief List of required configuration variables for the plugin to function. */
     std::vector<std::string> required_confs;
 
