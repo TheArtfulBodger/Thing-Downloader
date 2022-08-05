@@ -9,3 +9,5 @@ target_include_directories(td PUBLIC
     ${CMAKE_SOURCE_DIR}/ext
     ${CMAKE_SOURCE_DIR}/pluginspec
 )
+
+target_link_libraries(td dl)
