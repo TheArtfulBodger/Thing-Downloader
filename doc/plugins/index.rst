@@ -6,3 +6,4 @@ Plugins
    :caption: Contents:
 
    identity
+   apod
