@@ -29,3 +29,7 @@ html_static_path = ['static']
 # -- Options for Breathe Plugin ----------------------------------------------
 breathe_projects = {"ThingDownloader": "./_xml/"}
 breathe_default_project = "ThingDownloader"
+
+# -- Build Doxygen Documentation ---------------------------------------------
+import subprocess
+subprocess.call('cd .. ; doxygen', shell=True)
