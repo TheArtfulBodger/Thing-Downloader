@@ -83,6 +83,9 @@ using dl = std::shared_ptr<downloader_base>; /*!< @brief Alias for a pointer to 
 extern "C" {
 // List of Symbols required for a plugin
 
+/*! @brief Version of the specification implemented.*/
+extern const int version;
+
 /*! @brief *Unique* identifier of the plugin. Should only contain lowercase letters, numbers and hyphens.*/
 extern std::string key;
 

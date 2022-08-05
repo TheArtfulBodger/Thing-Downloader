@@ -20,6 +20,7 @@ Variables
 .. doxygenvariable:: description
 .. doxygenvariable:: required_confs
 .. doxygenvariable:: required_secrets
+.. doxygenvariable:: version
 
 Functions
 """""""""
