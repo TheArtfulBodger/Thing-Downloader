@@ -3,7 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <json.hpp>
-#include <v1.hpp>
+#include <td/spec/v1.hpp>
 
 std::string key = "apod";
 std::string name = "NASA Astronomy Picture of the Day";
