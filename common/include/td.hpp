@@ -1,7 +1,7 @@
 #pragma once
 
-#include "td/plugin.hpp"
 #include "td/minimal/downloader.hpp"
 #include "td/minimal/job.hpp"
+#include "td/plugin.hpp"
 
-//NoDocsPage
+// NoDocsPage

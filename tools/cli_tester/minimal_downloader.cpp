@@ -1,6 +1,6 @@
+#include <iostream>
 #include <td/minimal/downloader.hpp>
 #include <td/minimal/job.hpp>
-#include <iostream>
 
 void td::minimal_downloader::add_job(std::string key, td::buffer data)
 {

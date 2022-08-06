@@ -6,7 +6,7 @@
 
 td::plugin::plugin(std::string& path)
 {
-    // TODO: Add support for Windows LoadLibrary()
+    // Add support for Windows LoadLibrary()
 
     this->handle = dlopen(path.c_str(), RTLD_NOW);
 
