@@ -25,5 +25,5 @@ jobs:
       with:
         scandir: '.'
         builddir: 'build'
-        excludedirs: 'ext'
+        excludedirs: 'ext,build'
         extensions: 'c,h,C,H,cpp,hpp,cc,hh,c++,h++,cxx,hxx'
