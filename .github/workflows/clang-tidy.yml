@@ -21,7 +21,7 @@ jobs:
         configure-options: -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 
     - name: Run clang-tidy
-      uses: HorstBaerbel/action-clang-tidy@1.2
+      uses: TheArtfulBodger/action-clang-tidy@master
       with:
         scandir: '.'
         builddir: 'build'
