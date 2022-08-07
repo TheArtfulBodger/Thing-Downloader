@@ -16,9 +16,8 @@ bool get_line(std::istream& stream, std::string& delims, std::string& line)
     while (stream.get(c)) {
         if (delims.find(c) != std::string::npos) {
             return true;
-        } 
+        }
         line += c;
-        
     }
     return false;
 }
