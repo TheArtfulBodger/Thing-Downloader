@@ -16,9 +16,9 @@ bool get_line(std::istream& stream, std::string& delims, std::string& line)
     while (stream.get(c)) {
         if (delims.find(c) != std::string::npos) {
             return true;
-        } else {
-            line += c;
-        }
+        } 
+        line += c;
+        
     }
     return false;
 }
@@ -47,7 +47,7 @@ void download_video(const td::dl& base, const td::job& job)
         std::regex_search(line, m, r1);
         if (!m.empty()) {
 
-            job->set_progress(std::stof(m[1]) / 100.0f);
+            job->set_progress(std::stof(m[1]) / 100.0F);
 
         } else {
             // Check more regex Lines

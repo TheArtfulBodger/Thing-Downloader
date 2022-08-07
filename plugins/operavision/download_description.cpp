@@ -25,15 +25,15 @@ void download_description(const td::dl& base, const td::job& job)
     doc.parse(rsp.text);
 
     tinyxml2::XMLDocument xdoc = tinyxml2::XMLDocument();
-    auto decl = xdoc.NewDeclaration(nullptr);
+    auto* decl = xdoc.NewDeclaration(nullptr);
     xdoc.LinkEndChild(decl);
 
-    auto video = xdoc.NewElement("video");
+    auto* video = xdoc.NewElement("video");
     xdoc.LinkEndChild(video);
 
     // UniqueID
     {
-        auto elem = xdoc.NewElement("uniqueid");
+        auto* elem = xdoc.NewElement("uniqueid");
         video->LinkEndChild(elem);
 
         elem->SetAttribute("type", "ovdl");
@@ -42,14 +42,14 @@ void download_description(const td::dl& base, const td::job& job)
 
     // Title
     {
-        auto elem = xdoc.NewElement("title");
+        auto* elem = xdoc.NewElement("title");
         video->LinkEndChild(elem);
         elem->SetText(o.name.c_str());
     }
 
     // Outline
     {
-        auto elem = xdoc.NewElement("outline");
+        auto* elem = xdoc.NewElement("outline");
         video->LinkEndChild(elem);
 
         auto outline = doc.find("p.intro")
@@ -61,7 +61,7 @@ void download_description(const td::dl& base, const td::job& job)
 
     // Plot
     {
-        auto elem = xdoc.NewElement("plot");
+        auto* elem = xdoc.NewElement("plot");
         video->LinkEndChild(elem);
 
         auto nodes = doc.find("p.intro")
@@ -81,13 +81,13 @@ void download_description(const td::dl& base, const td::job& job)
     {
         auto nodes = doc.find(".castTable .castRow");
         for (int i = 0; i < nodes.nodeNum(); i++) {
-            auto elem = xdoc.NewElement("actor");
+            auto* elem = xdoc.NewElement("actor");
             video->LinkEndChild(elem);
 
-            auto elem2 = xdoc.NewElement("name");
+            auto* elem2 = xdoc.NewElement("name");
             elem->LinkEndChild(elem2);
 
-            auto elem3 = xdoc.NewElement("role");
+            auto* elem3 = xdoc.NewElement("role");
             elem->LinkEndChild(elem3);
 
             auto th = nodes.nodeAt(i).childAt(0).text();
@@ -100,7 +100,7 @@ void download_description(const td::dl& base, const td::job& job)
 
     // Time
     {
-        auto elem = xdoc.NewElement("date");
+        auto* elem = xdoc.NewElement("date");
         video->LinkEndChild(elem);
 
         auto date = doc.find(".performancedate time")
