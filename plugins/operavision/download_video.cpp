@@ -29,7 +29,7 @@ void download_video(const td::dl& base, const td::job& job)
     auto folder = std::filesystem::path(base->get_outpath_folder()) / o.company / o.name;
     std::filesystem::create_directories(folder);
 
-    subprocess::popen cmd("yt-dlp",
+    subprocess::popen cmd(base->get_conf("YOUTUBE_DL_PATH"),
         { "--write-sub",
             "--all-subs",
             "--embed-subs",
