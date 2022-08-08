@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
+add_subdirectory(operavision)
+
 include_directories(
     ${CMAKE_SOURCE_DIR}/pluginspec
     ${CMAKE_SOURCE_DIR}/ext
@@ -13,3 +15,4 @@ target_compile_features(identity PUBLIC cxx_std_17)
 add_library(apod SHARED apod.cpp)
 target_compile_features(apod PUBLIC cxx_std_17)
 target_link_libraries(apod cpr::cpr)
+

@@ -14,7 +14,7 @@ Simple plugin to download the NASA Astronomy picture of the day, as an example o
  * - **Required Configurations**
    - None
  * - **Required Secrets**
-   - `API_KEY`
+   - ``API_KEY``
 
 How it works
 ------------
