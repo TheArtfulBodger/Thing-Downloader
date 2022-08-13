@@ -48,4 +48,6 @@ public:
 private:
     void* handle;
 };
+
+using plugin_t = std::shared_ptr<plugin>; /*!< @brief alias type for pointer to plugin */
 }
