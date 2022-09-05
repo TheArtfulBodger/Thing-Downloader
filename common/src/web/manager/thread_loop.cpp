@@ -11,6 +11,8 @@ void td::web::downloader::loop_once()
 {
     loop_pop_queue();
     loop_job_queue();
+    using std::chrono::operator""ms;
+    std::this_thread::sleep_for(2000ms);
 }
 
 // See if loading jobs is requested

@@ -53,6 +53,8 @@ void download_video(const td::dl& base, const td::job& job)
         }
     }
 
+    cmd.wait();
+
     std::string data = "\xafNot Implemented";
     job->set_complete(td::buffer(data.begin(), data.end()), false);
 }
