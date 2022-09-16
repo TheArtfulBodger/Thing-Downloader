@@ -97,9 +97,10 @@ public:
 
     /*! @brief Destroy the downloader object. */
     ~thin_downloader() = default;
-    
+
     /*! @brief Returns the name of the plugin being used */
-    std::string plugin_id() {
+    std::string plugin_id()
+    {
         return plugin->key;
     }
 };

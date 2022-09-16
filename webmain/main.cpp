@@ -10,7 +10,7 @@
 
 struct rpc_handler : seasocks::WebSocket::Handler {
 
-    void rpc_error(seasocks::WebSocket* sock, int code, std::string message, nlohmann::json req)
+    static void rpc_error(seasocks::WebSocket* sock, int code, std::string message, nlohmann::json req)
     {
         nlohmann::json err = {
             { "jsonrpc", "2.0" },
@@ -20,7 +20,7 @@ struct rpc_handler : seasocks::WebSocket::Handler {
         sock->send(err.dump());
     }
 
-    void rpc_data(seasocks::WebSocket* sock, nlohmann::json result, nlohmann::json req)
+    static void rpc_data(seasocks::WebSocket* sock, nlohmann::json result, nlohmann::json req)
     {
         nlohmann::json res = {
             { "jsonrpc", "2.0" },
@@ -50,15 +50,15 @@ struct rpc_handler : seasocks::WebSocket::Handler {
             nlohmann::json l = nlohmann::json::array();
             for (auto& c : dl->get_jobs()) {
                 nlohmann::json k = {
-                    {"key", c.first},
-                    {"value", nlohmann::json::parse(c.second->to_json())},
-                    {"plugin", c.second->thin.lock()->plugin_id()}
+                    { "key", c.first },
+                    { "value", nlohmann::json::parse(c.second->to_json()) },
+                    { "plugin", c.second->thin.lock()->plugin_id() }
                 };
                 l.push_back(k);
             }
 
             rpc_data(sock, l, j);
-            
+
         } catch (nlohmann::json::parse_error&) {
             rpc_error(sock, -32700, "Parser Error", nullptr);
         } catch (std::runtime_error& e) {
@@ -70,7 +70,7 @@ struct rpc_handler : seasocks::WebSocket::Handler {
     {
     }
 
-    rpc_handler(std::shared_ptr<td::web::downloader> dl)
+    explicit rpc_handler(std::shared_ptr<td::web::downloader> dl)
         : dl(dl)
     {
     }
