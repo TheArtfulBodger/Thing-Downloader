@@ -86,7 +86,7 @@ public:
 
     std::filesystem::path outpath;
 
-    /*! @brief Construct a new minimal downloader object. */
+    /*! @brief Construct a new downloader object. */
     explicit thin_downloader(std::shared_ptr<downloader> main_downloader, plugin_t plugin)
         : main_downloader(main_downloader)
         , plugin(plugin)
@@ -95,8 +95,13 @@ public:
         std::filesystem::create_directory(outpath);
     }
 
-    /*! @brief Destroy the minimal downloader object. */
+    /*! @brief Destroy the downloader object. */
     ~thin_downloader() = default;
+    
+    /*! @brief Returns the name of the plugin being used */
+    std::string plugin_id() {
+        return plugin->key;
+    }
 };
 
 using thin_t = std::weak_ptr<thin_downloader>;
