@@ -32,7 +32,7 @@ Functions
 
 .. doxygenfunction:: process_job
 .. doxygenfunction:: should_skip
-.. doxygenfunction:: get_jobs
+.. doxygenfunction:: get_jobs(const td::dl &base)
 
 Abstract Classes & Typedefs
 ---------------------------
