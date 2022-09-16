@@ -2,7 +2,7 @@
 #include <td/minimal/downloader.hpp>
 #include <td/minimal/job.hpp>
 
-void td::minimal_downloader::add_job(std::string key, td::buffer data)
+void td::minimal_downloader::add_job(std::string key, std::string data)
 {
     if (jobs.find(key) == jobs.end()) {
         auto job = std::make_shared<td::minimal_job>(key, data);

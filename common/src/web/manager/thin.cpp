@@ -23,7 +23,7 @@ std::string td::web::thin_downloader::get_outpath_folder()
     return outpath;
 }
 
-void td::web::thin_downloader::add_job(std::string key, buffer data)
+void td::web::thin_downloader::add_job(std::string key, std::string data)
 {
     auto m = main_downloader.lock();
 

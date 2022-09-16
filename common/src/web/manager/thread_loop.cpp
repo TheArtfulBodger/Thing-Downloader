@@ -55,8 +55,10 @@ void td::web::downloader::loop_job_queue()
 
     // See if it should be skipped
     if (thin->plugin->should_skip(thin, job)) {
+        job->job_state = td::web::skipped;
         return;
     }
 
+    job->job_state = td::web::downloading;
     thin->plugin->process_job(thin, job);
 }

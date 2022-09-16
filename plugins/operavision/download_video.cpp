@@ -24,7 +24,7 @@ bool get_line(std::istream& stream, std::string& delims, std::string& line)
 
 void download_video(const td::dl& base, const td::job& job)
 {
-    auto o = msgpack::unpack<opera>(job->get_job_data());
+    auto o = nlohmann::json::parse(job->get_job_data()).get<opera>();
 
     auto folder = std::filesystem::path(base->get_outpath_folder()) / o.company / o.name;
     std::filesystem::create_directories(folder);
@@ -55,6 +55,5 @@ void download_video(const td::dl& base, const td::job& job)
 
     cmd.wait();
 
-    std::string data = "\xafNot Implemented";
-    job->set_complete(td::buffer(data.begin(), data.end()), false);
+    job->set_complete("{}", false);
 }

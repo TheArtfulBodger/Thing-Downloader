@@ -20,7 +20,9 @@ int main()
         // d->loop_once();
         std::string word;
         std::cin >> word;
-        std::cout << word << std::endl;
+        for (auto& c : d->get_jobs()) {
+            std::cout << c.second->to_json() << std::endl;
+        }
     }
 
     return 0;

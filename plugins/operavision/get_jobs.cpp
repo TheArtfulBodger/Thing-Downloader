@@ -33,9 +33,9 @@ void get_jobs(const td::dl& base)
         o.video_id = link.attribute("data-video-id");
 
         o.operation = download_mode_video;
-        base->add_job(o.video_id + "_video", msgpack::pack(o));
+        base->add_job(o.video_id + "_video", nlohmann::json(o).dump());
 
         o.operation = download_mode_desc;
-        base->add_job(o.video_id + "_description", msgpack::pack(o));
+        base->add_job(o.video_id + "_description", nlohmann::json(o).dump());
     }
 }

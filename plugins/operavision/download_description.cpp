@@ -16,7 +16,7 @@
 
 void download_description(const td::dl& base, const td::job& job)
 {
-    auto o = msgpack::unpack<opera>(job->get_job_data());
+    auto o = nlohmann::json::parse(job->get_job_data()).get<opera>();
 
     // Get page for performace on
     auto uri = "https://operavision.eu/performance/" + o.slug;
@@ -117,6 +117,5 @@ void download_description(const td::dl& base, const td::job& job)
 
     xdoc.SaveFile(outfile.c_str());
 
-    std::string data = "\x80";
-    job->set_complete(td::buffer(data.begin(), data.end()), false);
+    job->set_complete("{}", false);
 }

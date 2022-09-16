@@ -64,6 +64,9 @@ public:
      *  @details required for use if threads is set to 0
      */
     void loop_once();
+
+    std::queue<job_t> get_job_queue();
+    std::unordered_map<std::string, job_t> get_jobs();
 };
 
 /*!
@@ -75,7 +78,7 @@ class thin_downloader : public std::enable_shared_from_this<thin_downloader>, pu
     friend class downloader;
 
 public:
-    void add_job(std::string key, buffer data) override;
+    void add_job(std::string key, std::string data) override;
     std::string get_secret(std::string key) override;
     void set_secret(std::string key, std::string value) override;
     std::string get_conf(std::string key) override;

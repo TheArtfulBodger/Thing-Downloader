@@ -36,3 +36,10 @@ void td::web::downloader::get_jobs_plugin(std::string plugin)
 
     load_queue.push(plugins[plugin]);
 }
+
+std::unordered_map<std::string, td::web::job_t> td::web::downloader::get_jobs()
+{
+    std::lock_guard<std::mutex> lock(job_mutex);
+
+    return std::unordered_map<std::string, td::web::job_t>(jobs);
+}

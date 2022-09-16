@@ -5,6 +5,7 @@ add_library(td
     src/web/manager/thread_loop.cpp
     src/web/manager/thin.cpp
     src/web/manager/downloader.cpp
+    src/web/job.cpp
     src/minimal_downloader.cpp
     src/json_store.cpp
 )

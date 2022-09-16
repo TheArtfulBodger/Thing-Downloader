@@ -8,6 +8,14 @@
 
 namespace td::web {
 
+enum state {
+    unprocessed,
+    skipped,
+    downloading,
+    completed,
+    failed
+};
+
 class thin_downloader;
 using thin_t = std::weak_ptr<thin_downloader>;
 
@@ -18,28 +26,34 @@ class job : public td::job_base {
 public:
     void set_status(std::string stat) override { status = stat; }
     void set_progress(float prog) override { progress = prog; }
-    void set_complete(buffer result, bool fail) override
+    void set_complete(std::string result, bool fail) override
     {
         data = result;
         failed = fail;
+        job_state = failed ? td::web::failed : td::web::completed;
     }
 
-    buffer get_job_data() override { return data; }
+    std::string get_job_data() override { return data; }
 
-    job(std::string key, buffer data, thin_t thin)
+    job(std::string key, std::string data, thin_t thin)
         : key(std::move(key))
         , data(std::move(data))
         , thin(thin)
     {
     }
 
+    [[nodiscard]] state get_job_state() const { return job_state; }
+
     float progress;
     std::string key;
     std::string status;
     bool completed;
     bool failed;
-    buffer data;
+    std::string data;
     thin_t thin;
+    state job_state;
+
+    std::string to_json();
 };
 
 using job_t = std::shared_ptr<job>;
