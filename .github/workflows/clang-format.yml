@@ -1,15 +1,21 @@
-name: test-clang-format
-
-on: [push]
-
+name: clang-format Check
+on: [push, pull_request]
 jobs:
-  clang-format:
+  formatting-check:
+    name: Formatting Check
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        path:
+          - 'common'
+          - 'plugins'
+          - 'pluginspec'
+          - 'tools'
+          - 'webmain'
     steps:
     - uses: actions/checkout@v2
-    - uses: DoozyX/clang-format-lint-action@v0.14
+    - uses: jidicula/clang-format-action@v4.9.0
       with:
-        source: '.'
-        exclude: './ext'
-        style: WebKit
+        clang-format-version: '14'
+        check-path: ${{ matrix.path }}
+        fallback-style: 'WebKit'
