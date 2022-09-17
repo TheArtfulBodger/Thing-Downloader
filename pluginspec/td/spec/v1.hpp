@@ -23,7 +23,7 @@ public:
 
     /*!
      * @brief Set the progress of the download
-     * @param progress `float` Should be between 0 and 1
+     * @param progress `float` Should be between 0 and 100
      */
     virtual void set_progress(float progress) = 0;
 

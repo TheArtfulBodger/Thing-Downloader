@@ -46,8 +46,9 @@ void download_video(const td::dl& base, const td::job& job)
         std::regex_search(line, m, r1);
         if (!m.empty()) {
 
-            job->set_progress(std::stof(m[1]) / 100.0F);
-
+            job->set_progress(std::stof(m[1]));
+            std::string status = std::string(m[1]) + "% of " + std::string(m[2]) + std::string(m[3]) + std::string(" (") + std::string(m[6]) + std::string(")");
+            job->set_status(status);
         } else {
             // Check more regex Lines
         }
@@ -55,5 +56,5 @@ void download_video(const td::dl& base, const td::job& job)
 
     cmd.wait();
 
-    job->set_complete("{}", false);
+    job->set_complete(job->get_job_data(), false);
 }

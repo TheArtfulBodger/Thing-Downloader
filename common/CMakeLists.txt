@@ -17,3 +17,19 @@ target_include_directories(td PUBLIC
 )
 
 target_link_libraries(td dl)
+
+add_library(td_rpc
+    src/web/rpc/handler.cpp
+    src/web/rpc/populate_functions.cpp
+
+    src/web/rpc/functions/get_jobs.cpp
+)
+
+target_include_directories(td_rpc PUBLIC
+    include
+    ${CMAKE_SOURCE_DIR}/ext
+    ${CMAKE_SOURCE_DIR}/pluginspec
+    ${CMAKE_SOURCE_DIR}/ext/seasocks-1.4.4/src/main/c
+)
+
+target_link_libraries(td_rpc td dl seasocks)

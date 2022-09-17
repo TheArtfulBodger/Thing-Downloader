@@ -26,7 +26,7 @@ std::string td::web::job::to_json()
         { "data", nlohmann::json::parse(data) },
         { "status", to_string(job_state) },
         { "progress", progress },
-        { "status", status }
+        { "log", status }
     };
 
     return j.dump();

@@ -31,6 +31,7 @@ public:
         data = result;
         failed = fail;
         job_state = failed ? td::web::failed : td::web::completed;
+        progress = 100;
     }
 
     std::string get_job_data() override { return data; }

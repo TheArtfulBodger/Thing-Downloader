@@ -117,5 +117,5 @@ void download_description(const td::dl& base, const td::job& job)
 
     xdoc.SaveFile(outfile.c_str());
 
-    job->set_complete("{}", false);
+    job->set_complete(job->get_job_data(), false);
 }
