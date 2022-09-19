@@ -36,10 +36,13 @@ public:
 
     std::string get_job_data() override { return data; }
 
-    job(std::string key, std::string data, thin_t thin)
+    job(std::string key, std::string name, std::string data, thin_t thin)
         : key(std::move(key))
+        , name(name)
         , data(std::move(data))
         , thin(thin)
+        , job_state(td::web::unprocessed)
+        , progress(0.0)
     {
     }
 
@@ -48,6 +51,7 @@ public:
     float progress;
     std::string key;
     std::string status;
+    std::string name;
     bool completed;
     bool failed;
     std::string data;

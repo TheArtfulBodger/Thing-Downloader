@@ -15,16 +15,16 @@ int main()
     td::store_t secrets = std::make_shared<td::json_store>("secrets.json");
     td::store_t conf = std::make_shared<td::json_store>("conf.json");
 
-    std::string apod = "./plugins/operavision/liboperavision.so";
+    std::string apod = "./plugins/itchio/libitchio.so";
 
     std::filesystem::path p(".");
 
     auto d = std::make_shared<td::web::downloader>(6, p, secrets, conf);
 
     d->add_plugin(apod);
-    d->get_jobs_plugin("operavision");
+    d->get_jobs_plugin("itchio");
 
-    seasocks::Server server(std::make_shared<seasocks::PrintfLogger>());
+    seasocks::Server server(std::make_shared<seasocks::PrintfLogger>(seasocks::Logger::Level::Warning));
     server.addWebSocketHandler("/rpc", std::make_shared<td::web::rpc_handler>(d));
     server.serve(".", 9090);
 

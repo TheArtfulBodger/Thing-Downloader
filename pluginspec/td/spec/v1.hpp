@@ -41,9 +41,10 @@ public:
     /*!
      * @brief Adds a jon object to the queue
      * @param key `std::string` *Unique* string representing the downloader (preferrably a product ID and not a URL)
+     * @param name `std::string` Human Readable name for the download job
      * @param data `std::string` json encoded string for the job
      */
-    virtual void add_job(std::string key, std::string data) = 0;
+    virtual void add_job(std::string key, std::string name, std::string data) = 0;
 
     /*!
      * @brief Get value of a stored secret.

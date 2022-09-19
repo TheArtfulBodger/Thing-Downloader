@@ -23,15 +23,15 @@ std::string td::web::thin_downloader::get_outpath_folder()
     return outpath;
 }
 
-void td::web::thin_downloader::add_job(std::string key, std::string data)
+void td::web::thin_downloader::add_job(std::string key, std::string name, std::string data)
 {
     auto m = main_downloader.lock();
 
     std::string k = plugin->key + "/" + key;
 
-    auto job = std::make_shared<td::web::job>(k, data, shared_from_this());
+    auto job = std::make_shared<td::web::job>(k, name, data, shared_from_this());
 
-    m->jobs.insert(std::make_pair(k, job));
+    // m->jobs.insert(std::make_pair(k, job));
 
     {
         std::lock_guard<std::mutex> lock(m->job_mutex);
