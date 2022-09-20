@@ -44,9 +44,9 @@ void get_jobs(const td::dl& base)
     json_3["data"] = json;
 
     // Add jobs for the JSONs
-    base->add_job(json["date"].get<std::string>() + "image1", json_1.dump());
-    base->add_job(json["date"].get<std::string>() + "image2", json_2.dump());
-    base->add_job(json["date"].get<std::string>() + "json", json_3.dump());
+    base->add_job(json["date"].get<std::string>() + "image1", "APOD: " + json["date"].get<std::string>() + " (Image 1)", json_1.dump());
+    base->add_job(json["date"].get<std::string>() + "image2", "APOD: " + json["date"].get<std::string>() + " (Image 2)", json_2.dump());
+    base->add_job(json["date"].get<std::string>() + "json", "APOD: " + json["date"].get<std::string>() + " (Json Metadata)", json_3.dump());
 }
 
 void process_job(const td::dl& base, const td::job& job)

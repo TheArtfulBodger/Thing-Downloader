@@ -33,12 +33,10 @@ void get_jobs(const td::dl& base)
         o.slug = href.substr(href.find_last_of('/') + 1);
         o.video_id = link.attribute("data-video-id");
 
-        o.name = name + " (Video)";
         o.operation = download_mode_video;
-        base->add_job(o.video_id + "_video", nlohmann::json(o).dump());
+        base->add_job(o.video_id + "_video", name + " (Video)", nlohmann::json(o).dump());
 
-        o.name = name + " (Description)";
         o.operation = download_mode_desc;
-        base->add_job(o.video_id + "_description", nlohmann::json(o).dump());
+        base->add_job(o.video_id + "_description", name + " (Description)", nlohmann::json(o).dump());
     }
 }

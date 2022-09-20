@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 add_subdirectory(operavision)
+add_subdirectory(itchio)
 
 include_directories(
     ${CMAKE_SOURCE_DIR}/pluginspec

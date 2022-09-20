@@ -1,5 +1,7 @@
+#include <iostream>
 #include <json.hpp>
 #include <td/web/job.hpp>
+#include <td/web/manager.hpp>
 
 std::string to_string(td::web::state& st)
 {
@@ -21,12 +23,15 @@ std::string to_string(td::web::state& st)
 
 std::string td::web::job::to_json()
 {
+    auto p = thin.lock()->plugin_id();
 
     nlohmann::json j = {
-        { "data", nlohmann::json::parse(data) },
+        { "name", name },
+        //{ "data", nlohmann::json::parse(data) },
         { "status", to_string(job_state) },
         { "progress", progress },
-        { "log", status }
+        { "log", status },
+        { "plugin", p }
     };
 
     return j.dump();

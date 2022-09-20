@@ -20,14 +20,16 @@ public:
 
     std::string get_job_data() override { return data; }
 
-    minimal_job(std::string key, std::string data)
+    minimal_job(std::string key, std::string name, std::string data)
         : key(std::move(key))
+        , name(name)
         , data(std::move(data))
     {
     }
 
     float progress;
     std::string key;
+    std::string name;
     std::string status;
     bool completed;
     bool failed;

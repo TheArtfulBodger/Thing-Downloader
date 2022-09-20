@@ -20,22 +20,33 @@ class downloader : public std::enable_shared_from_this<downloader> {
 
     std::vector<std::thread> thread_pool;
     std::unordered_map<std::string, std::shared_ptr<thin_downloader>> plugins;
-    std::unordered_map<std::string, job_t> jobs;
+    // std::unordered_map<std::string, job_t> jobs;
     std::atomic<bool> should_quit;
 
     void thread_loop();
-    void loop_pop_queue();
-    void loop_job_queue();
+    bool loop_pop_queue();
+    bool loop_job_queue();
 
     std::queue<job_t> job_queue;
     std::mutex job_mutex;
 
+    std::vector<job_t> completed_list;
+    std::mutex completed_mutex;
+
+    std::vector<job_t> failed_list;
+    std::mutex failed_mutex;
+
+    std::vector<job_t> skipped_list;
+    std::mutex skipped_mutex;
+
     std::queue<std::shared_ptr<thin_downloader>> load_queue;
     std::mutex load_mutex;
 
+    std::mutex active_job_mutex;
+    std::unordered_map<std::thread::id, job_t> active_jobs;
+
     store_t secrets;
     store_t confs;
-
     std::filesystem::path outpath;
 
 public:
@@ -66,7 +77,10 @@ public:
     void loop_once();
 
     std::queue<job_t> get_job_queue();
-    std::unordered_map<std::string, job_t> get_jobs();
+    std::unordered_map<std::thread::id, job_t> get_active_jobs();
+    std::vector<job_t> get_completed_jobs();
+    std::vector<job_t> get_failed_jobs();
+    std::vector<job_t> get_skipped_jobs();
 };
 
 /*!
@@ -78,7 +92,7 @@ class thin_downloader : public std::enable_shared_from_this<thin_downloader>, pu
     friend class downloader;
 
 public:
-    void add_job(std::string key, std::string data) override;
+    void add_job(std::string key, std::string name, std::string data) override;
     std::string get_secret(std::string key) override;
     void set_secret(std::string key, std::string value) override;
     std::string get_conf(std::string key) override;
