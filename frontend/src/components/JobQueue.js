@@ -12,7 +12,7 @@ export default class JobQueue extends React.Component {
   client = null;
 
   componentDidMount () {
-    this.client = new Client('ws://172.29.2.159:9090/rpc');
+    this.client = new Client('ws://127.0.0.1:9090/rpc');
     this.tick = setInterval(
       async () => {
         if (!this.client.ready) return;
