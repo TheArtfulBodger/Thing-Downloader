@@ -1,0 +1,5 @@
+_*/
+frontend/node_modules
+Dockerfile
+*.Dockerfile
+docker-compose.yml

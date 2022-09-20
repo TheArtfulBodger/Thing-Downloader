@@ -1,0 +1,10 @@
+services:
+  thing-downloader:
+    build:
+      context: .
+      dockerfile: Build.Dockerfile
+    ports:
+      - 9090:9090
+    volumes:
+      - ./_operas:/data/operavision
+      - ./_build/conf.json:/data/conf.json

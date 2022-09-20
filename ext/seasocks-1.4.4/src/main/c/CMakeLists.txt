@@ -89,14 +89,14 @@ install(TARGETS seasocks EXPORT ${PROJECT_NAME}
         RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
         )
 
-install(DIRECTORY seasocks
-        DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
-        FILES_MATCHING PATTERN "*.h"
-        )
+#install(DIRECTORY seasocks
+#        DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+#        FILES_MATCHING PATTERN "*.h"
+#        )
 
-install(FILES "${PROJECT_BINARY_DIR}/internal/Config.h"
-        DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/seasocks/internal"
-        )
+#install(FILES "${PROJECT_BINARY_DIR}/internal/Config.h"
+#        DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/seasocks/internal"
+#        )
 
 install(
         EXPORT ${PROJECT_NAME}

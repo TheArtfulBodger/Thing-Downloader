@@ -33,3 +33,8 @@ target_include_directories(td_rpc PUBLIC
 )
 
 target_link_libraries(td_rpc td dl seasocks)
+
+install(TARGETS td td_rpc
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})

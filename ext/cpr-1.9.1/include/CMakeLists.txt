@@ -48,5 +48,5 @@ target_sources(cpr PRIVATE
     ${PROJECT_BINARY_DIR}/cpr_generated_includes/cpr/cprver.h
 )
 
-install(DIRECTORY cpr DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-install(DIRECTORY ${PROJECT_BINARY_DIR}/cpr_generated_includes/cpr DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+# install(DIRECTORY cpr DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+# install(DIRECTORY ${PROJECT_BINARY_DIR}/cpr_generated_includes/cpr DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
