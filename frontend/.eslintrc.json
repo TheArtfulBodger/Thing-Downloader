@@ -7,8 +7,7 @@
         "plugin:react/recommended",
         "standard"
     ],
-    "overrides": [
-    ],
+    "overrides": [],
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"
@@ -17,7 +16,15 @@
         "react"
     ],
     "rules": {
-        "semi": ["error", "always"],
-        "react/prop-types": [0]
-    }
+        "semi": [
+            "error",
+            "always"
+        ],
+        "react/prop-types": [
+            0
+        ]
+    },
+    "ignorePatterns": [
+        "public"
+    ]
 }
