@@ -43,7 +43,7 @@ class downloader : public std::enable_shared_from_this<downloader> {
     std::mutex load_mutex;
 
     std::mutex active_job_mutex;
-    std::unordered_map<std::string, job_t> active_jobs;
+    std::unordered_map<std::thread::id, job_t> active_jobs;
 
     store_t secrets;
     store_t confs;
@@ -77,7 +77,7 @@ public:
     void loop_once();
 
     std::queue<job_t> get_job_queue();
-    std::unordered_map<std::string, job_t> get_active_jobs();
+    std::unordered_map<std::thread::id, job_t> get_active_jobs();
     std::vector<job_t> get_completed_jobs();
     std::vector<job_t> get_failed_jobs();
     std::vector<job_t> get_skipped_jobs();

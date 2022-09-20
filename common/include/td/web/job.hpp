@@ -41,14 +41,12 @@ public:
         , name(name)
         , data(std::move(data))
         , thin(thin)
-        , job_state(td::web::unprocessed)
-        , progress(0.0)
     {
     }
 
     [[nodiscard]] state get_job_state() const { return job_state; }
 
-    float progress;
+    float progress { 0.0F };
     std::string key;
     std::string status;
     std::string name;
@@ -56,7 +54,7 @@ public:
     bool failed;
     std::string data;
     thin_t thin;
-    state job_state;
+    state job_state { unprocessed };
 
     std::string to_json();
 };

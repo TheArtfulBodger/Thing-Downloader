@@ -6,7 +6,6 @@
 #include <regex>
 #include <thread>
 
-#include <cpr/cpr.h>
 #include <json.hpp>
 #include <td/spec/v1.hpp>
 
@@ -14,7 +13,7 @@ void load_games(const td::dl& base, const td::job& job)
 {
 start:
     using std::chrono::operator""ms;
-    std::this_thread::sleep_for(250ms);
+    std::this_thread::sleep_for(50ms);
 
     auto data = nlohmann::json::parse(job->get_job_data());
 
@@ -36,8 +35,13 @@ start:
             { "mode", 2 }
         };
 
-        std::string key2 = key + "/" + fname;
-        base->add_job(key2, name + " - " + fname, job_object.dump());
+        std::string key2 = key;
+        key2 += "/";
+        key2 += fname;
+        std::string n(name);
+        n += " - ";
+        n += fname;
+        base->add_job(key2, n, job_object.dump());
     }
 
     if ((uploads["uploads"].is_object() || uploads["uploads"].empty()) && (data["downloads"].get<int>() != 0)) {

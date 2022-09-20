@@ -37,10 +37,10 @@ void td::web::downloader::get_jobs_plugin(std::string plugin)
     load_queue.push(plugins[plugin]);
 }
 
-std::unordered_map<std::string, td::web::job_t> td::web::downloader::get_active_jobs()
+std::unordered_map<std::thread::id, td::web::job_t> td::web::downloader::get_active_jobs()
 {
     std::lock_guard<std::mutex> lock(active_job_mutex);
-    return std::unordered_map<std::string, td::web::job_t>(active_jobs);
+    return std::unordered_map<std::thread::id, td::web::job_t>(active_jobs);
 }
 
 std::queue<td::web::job_t> td::web::downloader::get_job_queue()

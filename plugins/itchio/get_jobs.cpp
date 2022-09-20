@@ -26,11 +26,13 @@ void get_jobs(const td::dl& base)
             std::string u = g["game"]["url"].get<std::string>();
             std::regex_search(u, m, url);
 
-            std::string key = std::string(m[1]) + "/" + std::string(m[2]);
+            std::string key(m[1]);
+            key += "/";
+            key += m[2];
 
             g["key"] = key;
             g["mode"] = 1;
-            base->add_job(key, "Loading Games for: " + g["game"]["title"].get<std::string>(), g.dump());
+            base->add_job(key, "Loading Downloadables for: " + g["game"]["title"].get<std::string>(), g.dump());
         }
         i++;
     }

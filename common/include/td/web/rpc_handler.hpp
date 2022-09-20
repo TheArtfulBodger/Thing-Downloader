@@ -9,7 +9,7 @@
 
 namespace td::web {
 
-typedef std::function<nlohmann::json(std::shared_ptr<downloader>, nlohmann::json&)> rpc_t;
+using rpc_t = std::function<nlohmann::json(std::shared_ptr<downloader>, nlohmann::json&)>;
 
 enum rpc_error {
     parse_error = -32700,

@@ -60,7 +60,7 @@ bool td::web::downloader::loop_job_queue()
     // See if it should be skipped
     if (thin->plugin->should_skip(thin, job)) {
         job->job_state = td::web::skipped;
-        job->set_progress(100.0f);
+        job->set_progress(100.0F);
         std::lock_guard<std::mutex> lock(skipped_mutex);
         skipped_list.push_back(job);
         return true;
@@ -68,7 +68,7 @@ bool td::web::downloader::loop_job_queue()
 
     {
         std::lock_guard<std::mutex> lock(active_job_mutex);
-        active_jobs.insert(std::make_pair(job->key, job));
+        active_jobs.insert(std::make_pair(std::this_thread::get_id(), job));
     }
 
     job->job_state = td::web::downloading;
@@ -76,7 +76,7 @@ bool td::web::downloader::loop_job_queue()
 
     {
         std::lock_guard<std::mutex> lock(active_job_mutex);
-        active_jobs.erase(job->key);
+        active_jobs.erase(std::this_thread::get_id());
     }
 
     // Now add it to the relevant queues

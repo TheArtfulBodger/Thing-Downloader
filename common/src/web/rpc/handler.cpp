@@ -47,10 +47,17 @@ void td::web::rpc_handler::onData(seasocks::WebSocket* socket, const char* data)
         } catch (std::out_of_range& e) {
             throw std::make_pair(method_not_found, std::string("method not found: ") + j["method"].get<std::string>());
         }
-    } catch (std::pair<int, std::string>& p) {
+    } catch (std::pair<td::web::rpc_error, std::string>& p) {
         nlohmann::json err = {
             { "jsonrpc", "2.0" },
-            { "error", { { "code", p.first }, { "message", p.second } } },
+            { "error", { { "code", static_cast<int>(p.first) }, { "message", p.second } } },
+            { "id", j["id"] }
+        };
+        socket->send(err.dump());
+    } catch (std::pair<td::web::rpc_error, char const*>& p) {
+        nlohmann::json err = {
+            { "jsonrpc", "2.0" },
+            { "error", { { "code", static_cast<int>(p.first) }, { "message", p.second } } },
             { "id", j["id"] }
         };
         socket->send(err.dump());

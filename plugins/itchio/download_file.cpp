@@ -10,21 +10,21 @@
 #include <json.hpp>
 #include <td/spec/v1.hpp>
 
-static const char* humanSize(uint64_t bytes)
+static const char* human_size(uint64_t bytes)
 {
     char* suffix[] = { "Bytes", "KiB", "MiB", "GiB", "TiB" };
     char length = sizeof(suffix) / sizeof(suffix[0]);
 
     int i = 0;
-    double dblBytes = bytes;
+    double b = bytes;
 
     if (bytes > 1024) {
         for (i = 0; (bytes / 1024) > 0 && i < length - 1; i++, bytes /= 1024)
-            dblBytes = bytes / 1024.0;
+            b = bytes / 1024.0;
     }
 
     static char output[200];
-    sprintf(output, "%.02lf %s", dblBytes, suffix[i]);
+    sprintf(output, "%.02lf %s", b, suffix[i]);
     return output;
 }
 
@@ -44,7 +44,7 @@ void download_file(const td::dl& base, const td::job& job)
         std::time_t t = std::time(nullptr);
         std::tm tm = *std::localtime(&t);
         std::ostringstream ss;
-        ss << std::put_time(&tm, "%F") ;
+        ss << std::put_time(&tm, "%F");
         auto old = folder / "old" / ss.str();
 
         std::filesystem::create_directories(old);
@@ -55,17 +55,23 @@ void download_file(const td::dl& base, const td::job& job)
     std::ofstream of(file, std::ios::binary);
 
     cpr::ProgressCallback
-    prog([&](size_t downloadTotal, size_t downloadNow, size_t uploadTotal,
-             size_t uploadNow, intptr_t) -> bool {
-        float prog = 100 * ((float)downloadNow) / (downloadTotal + 1);
-        job->set_progress(prog);
-        std::string status = std::to_string(prog).substr(0, 5) + "% of " + humanSize(downloadTotal);
-        job->set_status(status);
+    prog([&](size_t d_total, size_t d_now, size_t /*u_total*/,
+             size_t /*u_now*/, intptr_t /*usr_data*/) -> bool {
+        if (d_total != 0) {
+            float prog = 100 * static_cast<float>(d_now) / (d_total + 1);
+            job->set_progress(prog);
+            std::string status = std::to_string(prog);
+            status += "% of ";
+            status += human_size(d_total);
+            job->set_status(status);
+        } else {
+            job->set_status("Waiting for response");
+        }
         return true;
     });
 
     cpr::WriteCallback
-    write([&](std::string data, intptr_t) -> bool {
+    write([&](std::string data, intptr_t /*usr_data*/) -> bool {
         of.write(data.c_str(), data.size());
         return true;
     });
@@ -75,7 +81,8 @@ void download_file(const td::dl& base, const td::job& job)
             { "download_key_id", std::to_string(data["game"]["id"].get<int>()) },
             { "api_key", base->get_secret("API_KEY") } },
         write, prog);
-    {
+
+    if (data["upload"]["md5_hash"].is_string()) {
         std::ofstream of2(md5_file);
         of2 << data["upload"]["md5_hash"].get<std::string>();
     }
