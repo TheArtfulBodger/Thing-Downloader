@@ -53,6 +53,7 @@
 #include <cctype>
 #include <cerrno>
 #include <fcntl.h>
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <limits>
@@ -1165,8 +1166,8 @@ bool Connection::sendStaticData() {
     if (queryPos != std::string::npos) {
         path.resize(queryPos);
     }
-    if (*path.rbegin() == '/') {
-        path += "index.html";
+    if (std::filesystem::is_directory(path)) {
+        path += "/index.html";
     }
 
     RaiiFd input{::open(path.c_str(), O_RDONLY)};
