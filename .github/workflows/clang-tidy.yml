@@ -14,7 +14,7 @@ jobs:
       uses: lukka/get-cmake@latest
 
     - name: Install Curl
-      run: sudo apt install -y libcurlopenssl-dev libopenssl-dev
+      run: sudo apt install -y libcurl-openssl-dev libssl-dev libcrypto-dev
 
     - name: Generate Makefiles
       run: |
