@@ -767,10 +767,11 @@ bool Connection::sendError(ResponseCode errorCode, const std::string& body) {
     auto errorNumber = static_cast<int>(errorCode);
     auto message = ::name(errorCode);
     bufferResponseAndCommonHeaders(errorCode);
-    auto errorContent = findEmbeddedContent("/_error.html");
+    std::string path = _server.getStaticPath() + "/404.html";
+    std::ifstream input(path);
     std::string document;
-    if (errorContent) {
-        document.assign(errorContent->data, errorContent->data + errorContent->length);
+    if (input.is_open()) {
+        document.assign((std::istreambuf_iterator<char>(input)), std::istreambuf_iterator<char>());
         replace(document, "%%ERRORCODE%%", toString(errorNumber));
         replace(document, "%%MESSAGE%%", message);
         replace(document, "%%BODY%%", body);
@@ -799,10 +800,10 @@ bool Connection::sendUnsupportedError(const std::string& reason) {
 
 bool Connection::send404() {
     auto path = getRequestUri();
-    auto embedded = findEmbeddedContent(path);
+    /*auto embedded = findEmbeddedContent(path);
     if (embedded) {
         return sendData(getContentType(path), embedded->data, embedded->length);
-    } else if (strcmp(path.c_str(), "/_livestats.js") == 0) {
+    } else*/ if (strcmp(path.c_str(), "/_livestats.js") == 0) {
         auto stats = _server.getStatsDocument();
         return sendData("text/javascript", stats.c_str(), stats.length());
     } else {
@@ -886,13 +887,13 @@ bool Connection::processHeaders(uint8_t* first, uint8_t* last) {
     _request = std::make_unique<PageRequest>(_address, requestUri, _server.server(),
                                              verb, std::move(headers));
 
-    const EmbeddedContent* embedded = findEmbeddedContent(requestUri);
+    /*const EmbeddedContent* embedded = findEmbeddedContent(requestUri);
     if (verb == Request::Verb::Get && embedded) {
         // MRG: one day, this could be a request handler.
         return sendData(getContentType(requestUri), embedded->data, embedded->length);
     } else if (verb == Request::Verb::Head && embedded) {
         return sendHeader(getContentType(requestUri), embedded->length);
-    }
+    }*/
 
     if (_request->contentLength() > _server.clientBufferSize()) {
         return sendBadRequest("Content length too long");

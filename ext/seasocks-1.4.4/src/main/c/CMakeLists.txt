@@ -65,7 +65,7 @@ add_library(seasocks ${SEASOCKS_LIBTYPE}
         util/Json.cpp
         util/PathHandler.cpp
         util/RootPageHandler.cpp
-        $<TARGET_OBJECTS:embedded>
+        #$<TARGET_OBJECTS:embedded>
         )
 if (DEFLATE_SUPPORT)
     target_sources(seasocks PRIVATE seasocks/ZlibContext.cpp)

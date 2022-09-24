@@ -16,6 +16,7 @@ WORKDIR /app
 COPY ./frontend/package.json ./frontend/yarn.lock /app/
 RUN yarn
 COPY ./frontend/ /app/
+COPY Readme.md /
 RUN yarn build
 
 FROM rockylinux:9.0-minimal
