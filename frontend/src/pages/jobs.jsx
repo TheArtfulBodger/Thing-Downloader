@@ -9,14 +9,14 @@ import JobQueue from '../components/JobQueue';
 const IndexPage = () => {
   return (
     <Page bc={[['/', 'Thing Downloader'], ['/jobs', 'Jobs'], ['/jobs', 'Jobs In Progress']]}>
-    <Heading>Downloadables & Queue</Heading>
-      <LinkCountBar page="active"/>
-      <CurrentlyDownloading/>
-      <JobQueue/>
-      </Page>
+      <Heading>Downloadables & Queue</Heading>
+      <LinkCountBar page="active" />
+      <CurrentlyDownloading />
+      <JobQueue />
+    </Page>
   );
 };
 
 export default IndexPage;
 
-export const Head = () => <title>Home Page</title>;
+export const Head = () => <title>Jobs Homepage</title>;

@@ -5,7 +5,7 @@
     },
     "extends": [
         "plugin:react/recommended",
-        "standard"
+        "strict-react/es6"
     ],
     "overrides": [],
     "parserOptions": {
@@ -21,6 +21,12 @@
             "always"
         ],
         "react/prop-types": [
+            0
+        ],
+        "indent": [
+            0
+        ],
+        "react/jsx-no-bind": [
             0
         ]
     },
