@@ -17,6 +17,8 @@ enum rpc_error {
     method_not_found = -32601,
     invalid_params = -32602,
     internal_error = -32603,
+
+    runtime_error = -32000,
     /* -32000 to -32099	Server error	Reserved for implementation-defined server-errors. */
 };
 

@@ -20,7 +20,7 @@ RUN yarn build
 
 FROM rockylinux:9.0-minimal
 WORKDIR /data
-EXPOSE 9090
+EXPOSE 8080
 ADD https://github.com/yt-dlp/yt-dlp/releases/download/2022.09.01/yt-dlp_linux /usr/bin/yt-dlp
 RUN chmod +x /usr/bin/yt-dlp
 RUN adduser user 

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <json.hpp>
 #include <td/web/manager.hpp>
 
 td::web::downloader::downloader(int threads, std::filesystem::path outpath, store_t secrets, store_t confs)
@@ -65,4 +66,85 @@ std::vector<td::web::job_t> td::web::downloader::get_skipped_jobs()
 {
     std::lock_guard<std::mutex> lock(skipped_mutex);
     return std::vector<td::web::job_t>(skipped_list);
+}
+
+std::unordered_map<std::string, std::shared_ptr<td::web::thin_downloader>> td::web::downloader::get_plugins()
+{
+    return plugins;
+}
+
+std::string td::web::downloader::to_json(std::string& key)
+{
+    auto c = plugins[key];
+
+    bool c_ = true;
+    auto _conf_keys = confs->get_keys(key);
+    for (auto& req_key : c->plugin->required_confs) {
+        if (std::find(_conf_keys.begin(), _conf_keys.end(), req_key) == _conf_keys.end()) {
+            c_ = false;
+            break;
+        }
+    }
+    nlohmann::json configuration;
+    for (auto& _c : _conf_keys) {
+        configuration[_c] = confs->get(key, _c);
+    }
+
+    bool s_ = true;
+    auto _secret_keys = secrets->get_keys(key);
+    for (auto& req_key : c->plugin->required_secrets) {
+        if (std::find(_secret_keys.begin(), _secret_keys.end(), req_key) == _secret_keys.end()) {
+            s_ = false;
+            break;
+        }
+    }
+
+    nlohmann::json k = {
+        { "name", c->plugin->name },
+        { "description", c->plugin->description },
+        { "required_confs", c->plugin->required_confs },
+        { "required_secrets", c->plugin->required_secrets },
+        { "set_confs", configuration },
+        { "set_secrets", _secret_keys },
+        { "has_required_confs", c_ },
+        { "has_required_secrets", s_ }
+
+    };
+    return k.dump();
+}
+
+/*
+bool td::web::downloader::has_required_config(td::plugin_t p)
+{
+    auto cs = confs->get_keys(p->key);
+    for (auto& c : p->required_confs) {
+        if (std::find(cs.begin(), cs.end(), c) == cs.end()) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool td::web::downloader::has_required_secrets(td::plugin_t p)
+{
+    auto cs = secrets->get_keys(p->key);
+    for (auto& c : p->required_secrets) {
+        if (std::find(cs.begin(), cs.end(), c) == cs.end()) {
+            return false;
+        }
+    }
+    return true;
+}
+
+
+*/
+
+void td::web::downloader::secrets_set(std::string& plugin, std::string& key, std::string& value)
+{
+    secrets->set(plugin, key, value);
+}
+
+void td::web::downloader::confs_set(std::string& plugin, std::string& key, std::string& value)
+{
+    confs->set(plugin, key, value);
 }

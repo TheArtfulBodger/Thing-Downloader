@@ -81,17 +81,21 @@ public:
     std::vector<job_t> get_completed_jobs();
     std::vector<job_t> get_failed_jobs();
     std::vector<job_t> get_skipped_jobs();
+    std::unordered_map<std::string, std::shared_ptr<thin_downloader>> get_plugins();
+    std::string to_json(std::string&);
+    void secrets_set(std::string& plugin, std::string& key, std::string& value);
+    void confs_set(std::string& plugin, std::string& key, std::string& value);
 };
 
 /*!
  * @brief Thin Downloader, interfaces with `td::web::downloader`
  */
 class thin_downloader : public std::enable_shared_from_this<thin_downloader>, public td::downloader_base {
-    plugin_t plugin;
     std::weak_ptr<downloader> main_downloader;
     friend class downloader;
 
 public:
+    plugin_t plugin;
     void add_job(std::string key, std::string name, std::string data) override;
     std::string get_secret(std::string key) override;
     void set_secret(std::string key, std::string value) override;

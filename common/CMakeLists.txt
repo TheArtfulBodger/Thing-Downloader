@@ -23,6 +23,7 @@ add_library(td_rpc
     src/web/rpc/populate_functions.cpp
 
     src/web/rpc/functions/get_jobs.cpp
+    src/web/rpc/functions/plugins.cpp
 )
 
 target_include_directories(td_rpc PUBLIC

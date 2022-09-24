@@ -30,7 +30,7 @@ auto get_paged = [](std::function<std::vector<td::web::job_t>(std::shared_ptr<td
         } else if (params["page"].is_number_integer()) {
             page = params["page"].get<int>();
         } else {
-            throw std::make_pair(td::web::invalid_params, std::string("page in /* params */ should be int or null, got: ") + params["page"].type_name());
+            throw std::make_pair(td::web::invalid_params, std::string("page in params should be int or null, got: ") + params["page"].type_name());
         }
 
         nlohmann::json l = nlohmann::json::array();
@@ -57,4 +57,17 @@ td::web::rpc_t td::web::rpc::get_n_completed_jobs = [](std::shared_ptr<downloade
 
 td::web::rpc_t td::web::rpc::get_n_skipped_jobs = [](std::shared_ptr<downloader> dl, nlohmann::json& /* params */) {
     return dl->get_skipped_jobs().size();
+};
+
+td::web::rpc_t td::web::rpc::load_jobs = [](std::shared_ptr<downloader> dl, nlohmann::json& p) {
+    if (!p["plugin"].is_string()) {
+        throw std::make_pair(td::web::invalid_params, std::string("plugin in params should be string: ") + p["plugin"].type_name());
+    }  
+
+    std::string plugin = p["plugin"].get<std::string>();
+  
+
+    dl->get_jobs_plugin(plugin);
+
+    return nlohmann::json { { "success", true } };
 };

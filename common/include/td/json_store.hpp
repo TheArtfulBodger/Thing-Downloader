@@ -12,5 +12,6 @@ public:
 
     std::string get(std::string& plugin, std::string& key) override;
     void set(std::string& plugin, std::string& key, std::string& value) override;
+    std::vector<std::string> get_keys(std::string& plugin) override;
 };
 }
