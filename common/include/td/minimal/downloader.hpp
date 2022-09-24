@@ -10,7 +10,7 @@ namespace td {
  */
 class minimal_downloader : public td::downloader_base {
 public:
-    void add_job(std::string key, buffer data) override;
+    void add_job(std::string key, std::string name, std::string data) override;
     std::string get_secret(std::string key) override;
     void set_secret(std::string key, std::string value) override;
     std::string get_conf(std::string key) override;

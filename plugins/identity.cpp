@@ -14,8 +14,7 @@ void get_jobs(const td::dl& /*base*/)
 
 void process_job(const td::dl& /*base*/, const td::job& job)
 {
-    std::string data = "\xafNot Implemented";
-    job->set_complete(td::buffer(data.begin(), data.end()), true);
+    job->set_complete(R"({"error":"Not Implemented"})", true);
 }
 
 bool should_skip(const td::dl& /*base*/, const td::job& /*buf*/)

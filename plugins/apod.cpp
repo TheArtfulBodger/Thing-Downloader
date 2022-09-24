@@ -44,15 +44,15 @@ void get_jobs(const td::dl& base)
     json_3["data"] = json;
 
     // Add jobs for the JSONs
-    base->add_job(json["date"].get<std::string>() + "image1", nlohmann::json::to_msgpack(json_1));
-    base->add_job(json["date"].get<std::string>() + "image2", nlohmann::json::to_msgpack(json_2));
-    base->add_job(json["date"].get<std::string>() + "json", nlohmann::json::to_msgpack(json_3));
+    base->add_job(json["date"].get<std::string>() + "image1", "APOD: " + json["date"].get<std::string>() + " (Image 1)", json_1.dump());
+    base->add_job(json["date"].get<std::string>() + "image2", "APOD: " + json["date"].get<std::string>() + " (Image 2)", json_2.dump());
+    base->add_job(json["date"].get<std::string>() + "json", "APOD: " + json["date"].get<std::string>() + " (Json Metadata)", json_3.dump());
 }
 
 void process_job(const td::dl& base, const td::job& job)
 {
     // decode
-    auto json = nlohmann::json::from_msgpack(job->get_job_data());
+    auto json = nlohmann::json::parse(job->get_job_data());
 
     auto path = std::filesystem::path(base->get_outpath_folder()) / json["date"].get<std::string>();
     std::filesystem::create_directory(path);
@@ -61,7 +61,7 @@ void process_job(const td::dl& base, const td::job& job)
         std::ofstream outfile(path / "data.json");
         outfile << json["data"];
         outfile.close();
-        job->set_complete(td::buffer(), true);
+        job->set_complete(json.dump(), true);
     } else {
 
         auto uri = std::filesystem::path(json["url"].get<std::string>());
@@ -85,7 +85,7 @@ void process_job(const td::dl& base, const td::job& job)
 bool should_skip(const td::dl& base, const td::job& job)
 {
     // decode
-    auto json = nlohmann::json::from_msgpack(job->get_job_data());
+    auto json = nlohmann::json::parse(job->get_job_data());
 
     auto path = std::filesystem::path(base->get_outpath_folder()) / json["date"].get<std::string>();
 

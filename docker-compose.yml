@@ -1,0 +1,11 @@
+services:
+  thing-downloader:
+    build:
+      context: .
+      dockerfile: Build.Dockerfile
+    ports:
+      - 8080:8080
+    volumes:
+      - ./_operas:/data/operavision
+      - ./_conf.json:/data/conf.json
+      - ./_secrets.json:/data/secrets.json

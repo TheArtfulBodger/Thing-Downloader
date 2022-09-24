@@ -39,11 +39,11 @@ template <typename func_t>
  */
 inline std::function<func_t> get_function(void* handle, std::string name)
 {
-    void* sym = dlsym(handle, name.c_str());
-    if (sym == nullptr) {
+    void* SyM = dlsym(handle, name.c_str());
+    if (SyM == nullptr) {
         throw std::runtime_error("ERROR: Symbol " + name + " is nullptr");
     }
-    return reinterpret_cast<func_t*>(sym);
+    return reinterpret_cast<func_t*>(SyM);
 }
 
 /*!

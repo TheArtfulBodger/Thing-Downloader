@@ -5,16 +5,14 @@
 
 namespace td {
 
-using buffer = std::vector<unsigned char>; /*!< @brief typedef for a binary buffer object*/
-
 /*! @brief Abstract class representing a job*/
 class job_base {
 public:
     /*!
      * @brief Get the job's data
-     * @return MsgPack buffer for the job
+     * @return json encoded object for the job
      */
-    virtual buffer get_job_data() = 0;
+    virtual std::string get_job_data() = 0;
 
     /*!
      * @brief Set the status string
@@ -25,16 +23,16 @@ public:
 
     /*!
      * @brief Set the progress of the download
-     * @param progress `float` Should be between 0 and 1
+     * @param progress `float` Should be between 0 and 100
      */
     virtual void set_progress(float progress) = 0;
 
     /*!
      * @brief Set the complete object
-     * @param data `td::buffer` MsgPack-encoded buffer for the job
+     * @param data `std::string` json encoded string for the job
      * @param failed `bool` false if successfully completed, false if failed
      */
-    virtual void set_complete(buffer data, bool failed) = 0;
+    virtual void set_complete(std::string data, bool failed) = 0;
 };
 
 /*! @brief Abstract class representing the downloader.*/
@@ -43,9 +41,10 @@ public:
     /*!
      * @brief Adds a jon object to the queue
      * @param key `std::string` *Unique* string representing the downloader (preferrably a product ID and not a URL)
-     * @param data `td::buffer` MsgPack-encoded buffer for the job
+     * @param name `std::string` Human Readable name for the download job
+     * @param data `std::string` json encoded string for the job
      */
-    virtual void add_job(std::string key, buffer data) = 0;
+    virtual void add_job(std::string key, std::string name, std::string data) = 0;
 
     /*!
      * @brief Get value of a stored secret.

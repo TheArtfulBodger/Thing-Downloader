@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.10)
 
 add_executable(td-test
     main.cpp
-    minimal_downloader.cpp
 )
 
 target_include_directories(td-test PUBLIC

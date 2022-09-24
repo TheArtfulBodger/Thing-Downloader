@@ -25,7 +25,8 @@ void get_jobs(const td::dl& base)
         CNode link = c.nodeAt(i).childAt(2);
 
         opera o;
-        o.name = title.find("h3").nodeAt(0).ownText();
+        std::string name;
+        name = title.find("h3").nodeAt(0).ownText();
         o.company = title.find(".titelSpan").nodeAt(0).text();
 
         std::string href = link.attribute("data-href");
@@ -33,9 +34,9 @@ void get_jobs(const td::dl& base)
         o.video_id = link.attribute("data-video-id");
 
         o.operation = download_mode_video;
-        base->add_job(o.video_id + "_video", msgpack::pack(o));
+        base->add_job(o.video_id + "_video", name + " (Video)", nlohmann::json(o).dump());
 
         o.operation = download_mode_desc;
-        base->add_job(o.video_id + "_description", msgpack::pack(o));
+        base->add_job(o.video_id + "_description", name + " (Description)", nlohmann::json(o).dump());
     }
 }

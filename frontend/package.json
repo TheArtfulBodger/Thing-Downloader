@@ -1,0 +1,41 @@
+{
+  "name": "@thingdownloader/frontend",
+  "version": "0.0.1",
+  "description": "Frontend for thingdownloader",
+  "license": "BSD-3-Clause",
+  "private": false,
+  "keywords": [
+    "gatsby"
+  ],
+  "scripts": {
+    "develop": "gatsby develop",
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean"
+  },
+  "dependencies": {
+    "@primer/react": "^35.9.0",
+    "gatsby": "^4.23.0",
+    "jsonrpc-websocket-client": "^0.7.2",
+    "lodash": "^4.17.21",
+    "query-string": "^7.1.1",
+    "raw-loader": "^4.0.2",
+    "react": "^18.2.0",
+    "react-collapsible": "^2.10.0",
+    "react-dom": "^18.2.0",
+    "react-markdown": "^8.0.3",
+    "react-toastify": "^9.0.8",
+    "rpc-websockets": "^7.5.0",
+    "styled-components": "^5.3.5"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.1",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-config-strict-react": "^9.0.2",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.31.8"
+  }
+}

@@ -24,7 +24,7 @@ bool get_line(std::istream& stream, std::string& delims, std::string& line)
 
 void download_video(const td::dl& base, const td::job& job)
 {
-    auto o = msgpack::unpack<opera>(job->get_job_data());
+    auto o = nlohmann::json::parse(job->get_job_data()).get<opera>();
 
     auto folder = std::filesystem::path(base->get_outpath_folder()) / o.company / o.name;
     std::filesystem::create_directories(folder);
@@ -46,13 +46,21 @@ void download_video(const td::dl& base, const td::job& job)
         std::regex_search(line, m, r1);
         if (!m.empty()) {
 
-            job->set_progress(std::stof(m[1]) / 100.0F);
-
+            job->set_progress(std::stof(m[1]));
+            std::string status(m[1]);
+            status += "% of ";
+            status += m[2];
+            status += m[3];
+            status += " (";
+            status += m[6];
+            status += ")";
+            job->set_status(status);
         } else {
             // Check more regex Lines
         }
     }
 
-    std::string data = "\xafNot Implemented";
-    job->set_complete(td::buffer(data.begin(), data.end()), false);
+    cmd.wait();
+
+    job->set_complete(job->get_job_data(), false);
 }

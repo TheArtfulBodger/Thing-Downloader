@@ -12,26 +12,28 @@ class minimal_job : public td::job_base {
 public:
     void set_status(std::string stat) override { status = stat; }
     void set_progress(float prog) override { progress = prog; }
-    void set_complete(buffer result, bool fail) override
+    void set_complete(std::string result, bool fail) override
     {
         data = result;
         failed = fail;
     }
 
-    buffer get_job_data() override { return data; }
+    std::string get_job_data() override { return data; }
 
-    minimal_job(std::string key, buffer data)
+    minimal_job(std::string key, std::string name, std::string data)
         : key(std::move(key))
+        , name(name)
         , data(std::move(data))
     {
     }
 
     float progress;
     std::string key;
+    std::string name;
     std::string status;
     bool completed;
     bool failed;
-    buffer data;
+    std::string data;
 };
 
 } // namespace td

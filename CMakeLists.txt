@@ -7,3 +7,5 @@ add_subdirectory(common)
 add_subdirectory(tools)
 
 add_subdirectory(plugins)
+
+add_subdirectory(tdd)

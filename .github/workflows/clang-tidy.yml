@@ -10,15 +10,17 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Build & Test
-      uses: ashutoshvarma/action-cmake-build@master
-      with:
-        build-dir: ${{ runner.workspace }}/build
-        # will set the CC & CXX for cmake
-        cc: gcc
-        cxx: g++
-        build-type: Release
-        configure-options: -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+    - name: Get latest CMake and ninja
+      uses: lukka/get-cmake@latest
+
+    - name: Install Curl
+      run: sudo apt install -y libcurl4-openssl-dev libssl-dev
+
+    - name: Generate Makefiles
+      run: |
+        mkdir _build;
+        cd _build;
+        cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 
     - name: Run clang-tidy
       uses: TheArtfulBodger/action-clang-tidy@master

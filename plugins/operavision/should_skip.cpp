@@ -8,7 +8,7 @@
 bool should_skip(const td::dl& base, const td::job& job)
 {
     // decode job
-    auto o = msgpack::unpack<opera>(job->get_job_data());
+    auto o = nlohmann::json::parse(job->get_job_data()).get<opera>();
 
     switch (o.operation) {
     case download_mode_video: {
@@ -34,7 +34,7 @@ void download_video(const td::dl& base, const td::job& job);
 
 void process_job(const td::dl& base, const td::job& job)
 {
-    auto o = msgpack::unpack<opera>(job->get_job_data());
+    auto o = nlohmann::json::parse(job->get_job_data()).get<opera>();
 
     switch (o.operation) {
     case download_mode_video:
@@ -45,8 +45,8 @@ void process_job(const td::dl& base, const td::job& job)
         break;
 
     default: {
-        std::string data = "\xbfUnknown Value for download mode";
-        job->set_complete(td::buffer(data.begin(), data.end()), true);
+        std::string data = R"({"error":"Unknown Value for download mode"})";
+        job->set_complete(data, true);
     }
     }
 }

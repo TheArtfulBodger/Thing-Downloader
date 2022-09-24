@@ -1,0 +1,36 @@
+{
+    "env": {
+        "es2021": true,
+        "node": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "strict-react/es6"
+    ],
+    "overrides": [],
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+        "semi": [
+            "error",
+            "always"
+        ],
+        "react/prop-types": [
+            0
+        ],
+        "indent": [
+            0
+        ],
+        "react/jsx-no-bind": [
+            0
+        ]
+    },
+    "ignorePatterns": [
+        "public"
+    ]
+}

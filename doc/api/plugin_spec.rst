@@ -30,9 +30,9 @@ Functions
     using no global state, and all job properties should be stored in the buffer,
     and secrets and configuration in the downloader object.
 
-.. doxygenfunction:: process_job
-.. doxygenfunction:: should_skip
-.. doxygenfunction:: get_jobs
+.. doxygenfunction:: process_job(const td::dl& base, const td::job& job)
+.. doxygenfunction:: should_skip(const td::dl& base, const td::job& job)
+.. doxygenfunction:: get_jobs(const td::dl &base)
 
 Abstract Classes & Typedefs
 ---------------------------
@@ -45,6 +45,5 @@ These are abstract classes, where smart pointers will be used as arguments
 .. doxygenclass:: td::downloader_base
    :members:
 
-.. doxygentypedef:: td::buffer
 .. doxygentypedef:: td::dl
 .. doxygentypedef:: td::job

@@ -1,4 +1,5 @@
 #include <dl++.hpp>
+#include <iostream>
 #include <td/plugin.hpp>
 
 #define VAR_FROM_DLL(sym) sym = libdl::get_value<decltype(sym)>(handle, #sym);
@@ -9,6 +10,10 @@ td::plugin::plugin(std::string& path)
     // Add support for Windows LoadLibrary()
 
     this->handle = dlopen(path.c_str(), RTLD_NOW);
+
+    if (this->handle == nullptr) {
+        std::cout << dlerror() << std::endl;
+    }
 
     VAR_FROM_DLL(key)
     VAR_FROM_DLL(name)
