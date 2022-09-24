@@ -45,11 +45,10 @@ void td::json_store::set(std::string& plugin, std::string& key, std::string& val
         j[plugin] = nlohmann::json::object();
     }
 
-    if(value != ""){
-    j[plugin][key] = value;
+    if (value != "") {
+        j[plugin][key] = value;
     } else {
-    j[plugin].erase(key);
-
+        j[plugin].erase(key);
     }
 
     std::ofstream of(p);

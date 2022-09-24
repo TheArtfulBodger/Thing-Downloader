@@ -62,10 +62,9 @@ td::web::rpc_t td::web::rpc::get_n_skipped_jobs = [](std::shared_ptr<downloader>
 td::web::rpc_t td::web::rpc::load_jobs = [](std::shared_ptr<downloader> dl, nlohmann::json& p) {
     if (!p["plugin"].is_string()) {
         throw std::make_pair(td::web::invalid_params, std::string("plugin in params should be string: ") + p["plugin"].type_name());
-    }  
+    }
 
     std::string plugin = p["plugin"].get<std::string>();
-  
 
     dl->get_jobs_plugin(plugin);
 

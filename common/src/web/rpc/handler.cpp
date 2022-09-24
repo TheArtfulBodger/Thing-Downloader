@@ -32,23 +32,22 @@ void td::web::rpc_handler::onData(seasocks::WebSocket* socket, const char* data)
         }
 
         std::string method = j["method"].get<std::string>();
-    
-            if(functions.find(method) == functions.end()){
-            throw std::make_pair(method_not_found, std::string("method not found: ") +method);
-            }
 
-            rpc_t f = functions[method];
+        if (functions.find(method) == functions.end()) {
+            throw std::make_pair(method_not_found, std::string("method not found: ") + method);
+        }
 
-            nlohmann::json result = f(dl, j["params"]);
+        rpc_t f = functions[method];
 
-            nlohmann::json res = {
-                { "jsonrpc", "2.0" },
-                { "result", result },
-                { "id", j["id"] }
-            };
-            socket->send(res.dump());
+        nlohmann::json result = f(dl, j["params"]);
 
-        
+        nlohmann::json res = {
+            { "jsonrpc", "2.0" },
+            { "result", result },
+            { "id", j["id"] }
+        };
+        socket->send(res.dump());
+
     } catch (std::pair<td::web::rpc_error, std::string>& p) {
         nlohmann::json err = {
             { "jsonrpc", "2.0" },

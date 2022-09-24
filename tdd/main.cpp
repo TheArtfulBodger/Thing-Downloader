@@ -17,7 +17,7 @@ int main(int argc, char** argv)
 
     std::filesystem::path exe(argv[0]);
     auto dir = exe.parent_path().parent_path() / "plugins";
-    
+
     std::filesystem::path p(".");
 
     auto d = std::make_shared<td::web::downloader>(6, p, secrets, conf);
