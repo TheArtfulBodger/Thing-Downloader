@@ -4,14 +4,14 @@
 
 #include <dlfcn.h>
 
-/*!
+/**
  * @brief A simple wrapper around libdl in modern C++
  * @todo Add Windows support via LoadLibrary functions
  *
  */
 namespace libdl {
 
-/*!
+/**
  * @brief Get the value object
  *
  * @tparam var_t The type of the variable.
@@ -46,7 +46,7 @@ inline std::function<func_t> get_function(void* handle, std::string name)
     return reinterpret_cast<func_t*>(SyM);
 }
 
-/*!
+/**
  * @brief Removes function wrapper from `std::function`
  * @details Acts similarly to <a href="https://en.cppreference.com/w/cpp/types/remove_pointer">std::remove_pointer</a>
  * or <a href="https://en.cppreference.com/w/cpp/types/remove_reference">std::remove_reference</a>
@@ -62,8 +62,12 @@ struct remove_function {
     using type = in_type;
 };
 
+/**
+ * @brief `std::function` template specialisation
+ */
 template <class in_type>
 struct remove_function<std::function<in_type>> {
+    /*! @brief The output type.*/
     using type = in_type;
 };
 }
