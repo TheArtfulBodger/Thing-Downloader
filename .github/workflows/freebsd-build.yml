@@ -1,0 +1,26 @@
+name: FreeBSD Build
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: macos-12
+    name: Build on FreeBSD (TrueNAS)
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Test in FreeBSD
+      id: test
+      uses: vmactions/freebsd-vm@v0
+      with:
+        usesh: true
+        prepare: |
+          pkg install -y curl g++ cmake
+
+        run: |
+          mkdir _build
+          cd _build
+          cmake ..
+          make
+
+
