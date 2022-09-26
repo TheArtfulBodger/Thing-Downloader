@@ -604,7 +604,6 @@ void Connection::sendHybi(uint8_t opcode, const uint8_t* webSocketResponse, size
     }
 }
 
-// byteswap impl from cppreference
 template<class T>
 constexpr T byteswap(T value) noexcept
 {

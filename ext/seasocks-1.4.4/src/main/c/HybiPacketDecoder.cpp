@@ -27,8 +27,23 @@
 #include "internal/LogStream.h"
 
 #include <arpa/inet.h>
-#include <byteswap.h>
+//#include <byteswap.h>
 #include <cstring>
+
+template<class T>
+constexpr T byteswap(T value) noexcept
+{
+    T o;
+
+    char* out = static_cast<char*>(static_cast<void*>(&o));
+    char* in = static_cast<char*>(static_cast<void*>(&value));
+
+    for(size_t i = 0; i < sizeof(T); i++){
+        out[i] = in[(sizeof(T)-1) - i];
+    }
+
+    return o;
+}
 
 namespace seasocks {
 
@@ -77,7 +92,7 @@ HybiPacketDecoder::MessageState HybiPacketDecoder::decodeNextMessage(
         }
         uint64_t raw_length;
         memcpy(&raw_length, &_buffer[ptr], sizeof(raw_length));
-        payloadLength = __bswap_64(raw_length);
+        payloadLength = byteswap(raw_length);
         ptr += 8;
     }
     uint32_t mask = 0;
