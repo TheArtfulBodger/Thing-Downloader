@@ -604,6 +604,22 @@ void Connection::sendHybi(uint8_t opcode, const uint8_t* webSocketResponse, size
     }
 }
 
+// byteswap impl from cppreference
+template<class T>
+constexpr T byteswap(T value) noexcept
+{
+    T o;
+
+    char* out = static_cast<char*>(static_cast<void*>(&o));
+    char* in = static_cast<char*>(static_cast<void*>(&value));
+
+    for(size_t i = 0; i < sizeof(T); i++){
+        out[i] = in[(sizeof(T)-1) - i];
+    }
+
+    return o;
+}
+
 void Connection::sendHybiData(const uint8_t* webSocketResponse, size_t messageLength) {
     if (messageLength < 126) {
         uint8_t nextByte = messageLength; // No MASK bit set.
@@ -620,7 +636,7 @@ void Connection::sendHybiData(const uint8_t* webSocketResponse, size_t messageLe
         uint8_t nextByte = 127; // No MASK bit set.
         if (!write(&nextByte, 1, false))
             return;
-        uint64_t lengthBytes = __bswap_64(messageLength);
+        uint64_t lengthBytes = byteswap(messageLength);
         if (!write(&lengthBytes, 8, false))
             return;
     }
