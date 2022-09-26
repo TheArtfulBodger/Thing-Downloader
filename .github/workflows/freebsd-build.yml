@@ -15,7 +15,7 @@ jobs:
       with:
         usesh: true
         prepare: |
-          pkg install -y curl g++ cmake
+          pkg install -y curl gcc cmake
 
         run: |
           mkdir _build
