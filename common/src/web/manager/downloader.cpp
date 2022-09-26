@@ -73,7 +73,7 @@ std::unordered_map<std::string, std::shared_ptr<td::web::thin_downloader>> td::w
     return plugins;
 }
 
-std::string td::web::downloader::to_json(std::string& key)
+std::string td::web::downloader::plugin_to_json(std::string& key)
 {
     auto c = plugins[key];
 

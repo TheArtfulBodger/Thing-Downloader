@@ -75,6 +75,8 @@ private:
     std::string data;
     thin_t thin;
     state job_state { unprocessed };
+
+    friend class downloader;
 };
 
 using job_t = std::shared_ptr<job>;
