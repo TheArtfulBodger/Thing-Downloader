@@ -28,7 +28,7 @@ Extensible C++ based tool to act as a downloader for various sources
    :maxdepth: 2
    :caption: Contents:
 
+   guides/index
    api/index
    plugins/index
-   guides/index
 
