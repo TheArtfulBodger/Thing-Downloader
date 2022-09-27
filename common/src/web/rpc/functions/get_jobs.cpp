@@ -66,7 +66,7 @@ td::web::rpc_t td::web::rpc::load_jobs = [](std::shared_ptr<downloader> dl, nloh
 
     std::string plugin = p["plugin"].get<std::string>();
 
-    auto j = nlohmann::json::parse(dl->plugin_to_json(plugin));
+    auto j = nlohmann::json::parse(dl->to_json(plugin));
 
     if (!j["has_required_confs"].get<bool>() || !j["has_required_secrets"].get<bool>()) {
         throw std::make_pair(td::web::runtime_error, "Plugin is missing configuration or secrets");
