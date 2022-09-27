@@ -36,6 +36,14 @@ public:
 
     std::string get_job_data() override { return data; }
 
+    /**
+     * @brief Construct a new job object
+     *
+     * @param key `std::string` *Unique* string representing the downloader (preferrably a product ID and not a URL)
+     * @param name `std::string` Human Readable name for the download job
+     * @param data `std::string` json encoded string for the job
+     * @param thin `thin_t` Thin downloader object representing the plugin
+     */
     job(std::string key, std::string name, std::string data, thin_t thin)
         : key(std::move(key))
         , name(name)
@@ -44,8 +52,20 @@ public:
     {
     }
 
+    /**
+     * @brief Get the object's job state
+     * @return state
+     */
     [[nodiscard]] state get_job_state() const { return job_state; }
 
+    /**
+     * @brief
+     *
+     * @return `std::string` json encoded string of the object (for rpc functions)
+     */
+    std::string to_json();
+
+private:
     float progress { 0.0F };
     std::string key;
     std::string status;
@@ -56,7 +76,7 @@ public:
     thin_t thin;
     state job_state { unprocessed };
 
-    std::string to_json();
+    friend class downloader;
 };
 
 using job_t = std::shared_ptr<job>;

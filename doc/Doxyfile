@@ -7,3 +7,4 @@ GENERATE_XML           = YES
 XML_OUTPUT             = _xml
 GENERATE_HTML          = NO
 GENERATE_LATEX         = NO
+EXTRACT_ALL            = NO

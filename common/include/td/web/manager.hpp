@@ -76,14 +76,31 @@ public:
      */
     void loop_once();
 
+    /** @brief Get the job queue */
     std::queue<job_t> get_job_queue();
+
+    /** @brief Get the list of active jobs */
     std::unordered_map<std::thread::id, job_t> get_active_jobs();
+
+    /** @brief Get the completed jobs */
     std::vector<job_t> get_completed_jobs();
+
+    /** @brief Get the failed jobs */
     std::vector<job_t> get_failed_jobs();
+
+    /** @brief Get the skipped jobs */
     std::vector<job_t> get_skipped_jobs();
+
+    /** @brief Get the loaded plugins */
     std::unordered_map<std::string, std::shared_ptr<thin_downloader>> get_plugins();
-    std::string to_json(std::string&);
+
+    /** @brief Get the plugin as a json object */
+    std::string plugin_to_json(std::string&);
+
+    /** @brief Set a secret value */
     void secrets_set(std::string& plugin, std::string& key, std::string& value);
+
+    /** @brief Set a configuration value */
     void confs_set(std::string& plugin, std::string& key, std::string& value);
 };
 
@@ -95,6 +112,7 @@ class thin_downloader : public std::enable_shared_from_this<thin_downloader>, pu
     friend class downloader;
 
 public:
+    /** @brief The plugin object */
     plugin_t plugin;
     void add_job(std::string key, std::string name, std::string data) override;
     std::string get_secret(std::string key) override;
@@ -102,6 +120,7 @@ public:
     std::string get_conf(std::string key) override;
     std::string get_outpath_folder() override;
 
+    /** @brief The output folder */
     std::filesystem::path outpath;
 
     /*! @brief Construct a new downloader object. */

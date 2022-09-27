@@ -9,7 +9,8 @@ def create_file(file, p):
 
     with file.open() as infile:
         lines =infile.readlines()
-        if any([line in ["//NoDocsPage\n", "//NoDocsPage"] for line in lines] ):
+        if any([line in ["//NoDocsPage\n", "//NoDocsPage", "// NoDocsPage\n", "// NoDocsPage"] for line in lines] ):
+            print(f"nodocspage  as {file}")
             return
 
     relp = Path(os.path.relpath(file, p))
@@ -18,6 +19,7 @@ def create_file(file, p):
 
     if not of.parent.exists():
         new_index = Path(str(of.parent) + "_gen.rst")
+        print(f"new index at{new_index}")
         if not new_index.is_file():
             if not of.parent.parent.exists():
                 of.parent.parent.mkdir(parents=True, exist_ok=True)
@@ -49,6 +51,7 @@ def setup(app):
 
         for file in p.glob("**/*.hpp"):
             rel_path = os.path.relpath(file, p)
+            print(rel_path)
             files.append((rel_path.count("/"), file, p))
     files.sort(reverse=True)
 

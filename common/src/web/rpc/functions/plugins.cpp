@@ -5,7 +5,7 @@ td::web::rpc_t td::web::rpc::get_plugins = [](std::shared_ptr<downloader> dl, nl
     l["loaded"] = nlohmann::json::object();
     for (auto& c : dl->get_plugins()) {
         std::string k = c.first;
-        l["loaded"][c.first] = nlohmann::json::parse(dl->to_json(k));
+        l["loaded"][c.first] = nlohmann::json::parse(dl->plugin_to_json(k));
     }
     return l;
 };
