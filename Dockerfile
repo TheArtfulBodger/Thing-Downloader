@@ -11,10 +11,10 @@ RUN cmake /src -DCMAKE_INSTALL_PREFIX=/prefix
 RUN make -j$(nproc)
 RUN make install
 
-FROM node:18.9.0-alpine3.15 as build_node
+FROM --platform=linux/amd64 node:18.9.0-alpine3.15 as build_node
 WORKDIR /app
 COPY ./frontend/package.json ./frontend/yarn.lock /app/
-RUN yarn
+RUN yarn --production
 COPY ./frontend/ /app/
 COPY Readme.md /
 RUN yarn build
