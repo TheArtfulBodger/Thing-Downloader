@@ -21,6 +21,7 @@ COPY ./frontend/package.json ./frontend/yarn.lock /app/
 RUN yarn --network-timeout 600000 --production
 COPY ./frontend/ /app/
 COPY Readme.md /
+RUN yarn gatsby telemetry --disable
 RUN yarn build
 
 FROM rockylinux:9.0-minimal
