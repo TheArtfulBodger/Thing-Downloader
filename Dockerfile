@@ -14,7 +14,7 @@ RUN make install
 FROM node:18.9.0-alpine3.15 as build_node
 WORKDIR /app
 COPY ./frontend/package.json ./frontend/yarn.lock /app/
-RUN yarn
+RUN yarn --network-timeout 600000 --production
 COPY ./frontend/ /app/
 COPY Readme.md /
 RUN yarn build
