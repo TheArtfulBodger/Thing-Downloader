@@ -11,17 +11,12 @@ RUN cmake /src -DCMAKE_INSTALL_PREFIX=/prefix
 RUN make -j$(nproc)
 RUN make install
 
-FROM node:18.9.0-alpine3.15 as build_node
+FROM --platform=linux/amd64 node:18.9.0-alpine3.15 as build_node
 WORKDIR /app
-ENV PYTHONUNBUFFERED=1
-RUN apk add --update --no-cache python3 build-base
-RUN python3 -m ensurepip
-RUN pip3 install --no-cache --upgrade pip setuptools
 COPY ./frontend/package.json ./frontend/yarn.lock /app/
-RUN yarn --network-timeout 600000 --production
+RUN yarn --production
 COPY ./frontend/ /app/
 COPY Readme.md /
-RUN yarn gatsby telemetry --disable
 RUN yarn build
 
 FROM rockylinux:9.0-minimal
