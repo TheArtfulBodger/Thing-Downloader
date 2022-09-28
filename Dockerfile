@@ -14,7 +14,7 @@ RUN make install
 FROM node:18.9.0-alpine3.15 as build_node
 WORKDIR /app
 ENV PYTHONUNBUFFERED=1
-RUN apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python
+RUN apk add --update --no-cache python3 build-base
 RUN python3 -m ensurepip
 RUN pip3 install --no-cache --upgrade pip setuptools
 COPY ./frontend/package.json ./frontend/yarn.lock /app/
