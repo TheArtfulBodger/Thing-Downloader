@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.10)
 
 add_subdirectory(operavision)
 add_subdirectory(itchio)
+add_subdirectory(humble-bundle)
+
 
 include_directories(
     ${CMAKE_SOURCE_DIR}/pluginspec
@@ -17,5 +19,5 @@ add_library(apod SHARED apod.cpp)
 target_compile_features(apod PUBLIC cxx_std_17)
 target_link_libraries(apod cpr::cpr)
 
-install(TARGETS apod itchio operavision
+install(TARGETS apod itchio operavision humble-bundle
     LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/plugins)
