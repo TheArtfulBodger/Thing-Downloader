@@ -11,7 +11,6 @@ bool should_skip(const td::dl& base, const td::job& job)
         return true;
     }
 
-
     for (auto dl : data["downloads"]) {
         auto p = std::filesystem::path(base->get_outpath_folder()) / data["parent"]["human_name"].get<std::string>() / data["human_name"].get<std::string>();
 
@@ -26,12 +25,12 @@ bool should_skip(const td::dl& base, const td::job& job)
 
             auto of = p / file;
 
-            if(!std::filesystem::exists(of)){
+            if (!std::filesystem::exists(of)) {
                 return false;
                 // check for md5 or sha-1 file
             }
-        }}
-
+        }
+    }
 
     return true;
 }

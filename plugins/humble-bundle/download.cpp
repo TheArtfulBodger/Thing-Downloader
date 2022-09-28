@@ -26,13 +26,12 @@ void process_job(const td::dl& base, const td::job& job)
 
             auto out_path = p / file;
 
-            if(std::filesystem::exists(out_path)){
+            if (std::filesystem::exists(out_path)) {
                 i++;
                 continue;
             }
 
             // check for md5 or sha-1 file
-
 
             std::ofstream of(out_path, std::ios::binary);
 
@@ -49,7 +48,7 @@ void process_job(const td::dl& base, const td::job& job)
                     status += "% of ";
                     status += g["human_size"].get<std::string>();
                     status += " (";
-                    status += std::to_string(i+1);
+                    status += std::to_string(i + 1);
                     status += " of ";
                     status += std::to_string(n);
                     status += ")";
