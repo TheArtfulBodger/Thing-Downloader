@@ -26,6 +26,7 @@ void get_jobs(const td::dl& base)
 
         opera o;
         std::string name;
+        o.name = name;
         name = title.find("h3").nodeAt(0).ownText();
         o.company = title.find(".titelSpan").nodeAt(0).text();
 
