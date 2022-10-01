@@ -1,0 +1,16 @@
+---
+dictionaries:
+  - en
+  - en_GB
+
+# Any files/folders we should ignore?
+excluded_files:
+  - "ext/**/*"
+  - "yarn.lock"
+  - ".github/.typo-ci.yml"
+
+# Any words we should ignore?
+excluded_words: []
+
+# Would you like filenames to also be spellchecked?
+spellcheck_filenames: true
