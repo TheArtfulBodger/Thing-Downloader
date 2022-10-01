@@ -1,0 +1,17 @@
+name: Lint
+on: push
+jobs:
+  eslint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install modules
+      run: cd frontend; yarn
+    - name: Run ESLint
+      run: cd frontend; yarn eslint . --ext .js,.jsx,.ts,.tsx
+  spelling:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: typos-action
+      uses: crate-ci/typos@v1.0.4
