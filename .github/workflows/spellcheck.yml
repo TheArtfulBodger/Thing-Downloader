@@ -1,0 +1,15 @@
+# Add to: .github/workflows/spellcheck.yml
+name: Typo CI
+
+on:
+  push:
+  pull_request:
+jobs:
+  spellcheck:
+    name: Typo CI (GitHub Action)
+    runs-on: ubuntu-latest
+    steps:
+    - name: TypoCheck
+      uses: typoci/spellcheck-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GHCR_TOKEN }}
