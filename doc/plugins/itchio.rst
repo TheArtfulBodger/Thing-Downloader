@@ -22,7 +22,7 @@ How it works
 Get Jobs Stage
 ^^^^^^^^^^^^^^
 
-The script loads the user's libary (one page at a time) using the :ref:`Owned Keys API Route<Getting The Library>`
+The script loads the user's library (one page at a time) using the :ref:`Owned Keys API Route<Getting The Library>`
 
 
 Download Jobs

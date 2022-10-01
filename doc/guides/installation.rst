@@ -9,7 +9,7 @@ Linux (via Docker)
 * `Install Docker <https://docs.docker.com/desktop/install/linux-install/>`_
 * `Install Docker Compose <https://docs.docker.com/compose/install/linux/>`_
 
-This is currently the best way to use the program. The docker image is ``ghcr.io/theartfulbodger/thing-downloader:main``. I reccommend creating via docker-compose to enable easy control of the containers.
+This is currently the best way to use the program. The docker image is ``ghcr.io/theartfulbodger/thing-downloader:main``. I recommend creating via docker-compose to enable easy control of the containers.
 
 In an empty directory, create the file ``docker-compose.yml`` with the following contents
 

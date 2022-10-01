@@ -23,7 +23,7 @@ public:
     /**
      * @brief Construct a new minimal job object
      *
-     * @param key `std::string` *Unique* string representing the downloader (preferrably a product ID and not a URL)
+     * @param key `std::string` *Unique* string representing the downloader (preferably a product ID and not a URL)
      * @param name `std::string` Human Readable name for the download job
      * @param data `std::string` json encoded string for the job
      */
