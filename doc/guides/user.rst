@@ -25,9 +25,9 @@ Clicking the configuration button for a plugin sends you to a page to configure 
 
 .. thumbnail:: ./user/configuration-ii.png
 
-    You can set configuraton variables by entering the form and pressing submit.
+    You can set configuration variables by entering the form and pressing submit.
 
-To set configuraton variables you enter the form and pressing submit. You can also add non-required variables by pressing on the "add new" bar to reveal the form.
+To set configuration variables you enter the form and pressing submit. You can also add non-required variables by pressing on the "add new" bar to reveal the form.
 
 Once a plugin is configured, the "Load Jobs" button may be pressed
 

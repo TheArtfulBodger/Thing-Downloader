@@ -7,7 +7,7 @@ This guide is a very simple
 Creating
 --------
 
-If it's a relatively simple plugin, it should be contained in a single file, if it's larger, I'd reccommend creating a folder in ``plugins``.
+If it's a relatively simple plugin, it should be contained in a single file, if it's larger, I'd recommend creating a folder in ``plugins``.
 
 CMake
 ^^^^^

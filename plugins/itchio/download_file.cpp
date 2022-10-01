@@ -39,7 +39,7 @@ void download_file(const td::dl& base, const td::job& job)
     auto md5_file = folder / (data["upload"]["filename"].get<std::string>() + ".md5");
 
     if (std::filesystem::is_regular_file(md5_file)) {
-        job->set_status("Moving Pervious Version of File to subdirectory");
+        job->set_status("Moving Previous Version of File to subdirectory");
 
         std::time_t t = std::time(nullptr);
         std::tm tm = *std::localtime(&t);

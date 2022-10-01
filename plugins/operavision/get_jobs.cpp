@@ -12,7 +12,7 @@
 
 void get_jobs(const td::dl& base)
 {
-    // Get page with all performaces on
+    // Get page with all performances on
     auto rsp = cpr::Get(cpr::Url { "https://operavision.eu/performances" });
     CDocument doc;
     doc.parse(rsp.text);

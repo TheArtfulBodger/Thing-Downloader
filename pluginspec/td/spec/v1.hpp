@@ -40,7 +40,7 @@ class downloader_base {
 public:
     /*!
      * @brief Adds a jon object to the queue
-     * @param key `std::string` *Unique* string representing the downloader (preferrably a product ID and not a URL)
+     * @param key `std::string` *Unique* string representing the downloader (preferably a product ID and not a URL)
      * @param name `std::string` Human Readable name for the download job
      * @param data `std::string` json encoded string for the job
      */
@@ -122,7 +122,7 @@ void process_job(const td::dl& base, const td::job& job);
  * @param base Smart pointer to the base downloader object (td::downloader_base)
  * @param job Smart pointer to the job object (td::job_base)
  * @return `false` If the job should continue
- * @return `true` If the job has been executed succesfuly previously
+ * @return `true` If the job has been executed successfully previously
  */
 bool should_skip(const td::dl& base, const td::job& job);
 }

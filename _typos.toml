@@ -1,0 +1,2 @@
+[files]
+extend-exclude = ["ext/*", "frontend/yarn.lock"]
