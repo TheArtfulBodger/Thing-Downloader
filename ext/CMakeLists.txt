@@ -6,6 +6,9 @@ set(CPR_FORCE_USE_SYSTEM_CURL ON CACHE BOOL "Force Use of System curl")
 endif()
 add_subdirectory(cpr-1.9.1)
 
+if(MSVC)
+set(USE_ZLIB OFF)
+endif()
 add_subdirectory(IXWebSocket)
 add_subdirectory(tinyxml2-9.0.0)
 
