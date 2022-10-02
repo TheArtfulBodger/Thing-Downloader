@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+
 add_library(td
     src/plugin.cpp
     src/web/manager/thread_loop.cpp
@@ -15,8 +17,10 @@ target_include_directories(td PUBLIC
     ${CMAKE_SOURCE_DIR}/ext
     ${CMAKE_SOURCE_DIR}/pluginspec
 )
-
-target_link_libraries(td dl)
+if(NOT WIN32)
+target_link_libraries(td dl pthread)
+endif()
+target_compile_features(td PUBLIC cxx_std_17)
 
 add_library(td_rpc
     src/web/rpc/handler.cpp
@@ -30,10 +34,14 @@ target_include_directories(td_rpc PUBLIC
     include
     ${CMAKE_SOURCE_DIR}/ext
     ${CMAKE_SOURCE_DIR}/pluginspec
-    ${CMAKE_SOURCE_DIR}/ext/seasocks-1.4.4/src/main/c
+    ${CMAKE_SOURCE_DIR}/ext/IXWebSocket
 )
 
-target_link_libraries(td_rpc td dl seasocks)
+target_link_libraries(td_rpc td ixwebsocket)
+if(NOT WIN32)
+target_link_libraries(td_rpc dl pthread)
+endif()
+target_compile_features(td_rpc PUBLIC cxx_std_17)
 
 install(TARGETS td td_rpc
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}

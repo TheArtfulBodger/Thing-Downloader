@@ -15,7 +15,7 @@ release = "0.1"
 import sys, os
 
 sys.path.append(os.path.abspath("doc_plugins"))
-extensions = ["breathe", "create_rst", "sphinx.ext.autosectionlabel"]
+extensions = ["breathe", "create_rst", "sphinx.ext.autosectionlabel", 'sphinxcontrib.images']
 
 templates_path = ["templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]

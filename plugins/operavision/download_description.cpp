@@ -18,7 +18,7 @@ void download_description(const td::dl& base, const td::job& job)
 {
     auto o = nlohmann::json::parse(job->get_job_data()).get<opera>();
 
-    // Get page for performace on
+    // Get page for performance on
     auto uri = "https://operavision.eu/performance/" + o.slug;
     auto rsp = cpr::Get(cpr::Url { uri });
     CDocument doc;
@@ -115,7 +115,7 @@ void download_description(const td::dl& base, const td::job& job)
     auto outfile = folder / (o.slug + ".nfo");
     std::filesystem::create_directories(folder);
 
-    xdoc.SaveFile(outfile.c_str());
+    xdoc.SaveFile(outfile.string().c_str());
 
     job->set_complete(job->get_job_data(), false);
 }

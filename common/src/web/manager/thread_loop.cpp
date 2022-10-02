@@ -2,7 +2,7 @@
 
 void td::web::downloader::thread_loop()
 {
-    while (not should_quit) {
+    while (!should_quit) {
         loop_once();
     }
 }

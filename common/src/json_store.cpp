@@ -17,7 +17,7 @@ std::string td::json_store::get(std::string& plugin, std::string& key)
     try {
         j = nlohmann::json::parse(f);
 
-    } catch (nlohmann::json::parse_error& error) {
+    } catch (nlohmann::json::parse_error&) {
         j = nlohmann::json::object();
     }
     f.close();
@@ -36,7 +36,7 @@ void td::json_store::set(std::string& plugin, std::string& key, std::string& val
     try {
         j = nlohmann::json::parse(f);
 
-    } catch (nlohmann::json::parse_error& error) {
+    } catch (nlohmann::json::parse_error&) {
         j = nlohmann::json::object();
     }
     f.close();
@@ -63,7 +63,7 @@ std::vector<std::string> td::json_store::get_keys(
     try {
         j = nlohmann::json::parse(f);
 
-    } catch (nlohmann::json::parse_error& error) {
+    } catch (nlohmann::json::parse_error&) {
         j = nlohmann::json::object();
     }
     f.close();

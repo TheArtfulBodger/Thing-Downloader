@@ -3,8 +3,8 @@ Plugin Specification
 
 This contains the documentation for **Version 1** of the plugin specification
 
-Plugin Funcions
----------------
+Plugin Functions
+----------------
 A plugin needs the following values defined
 
 .. warning::

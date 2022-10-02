@@ -32,7 +32,7 @@ export default class AddConfig extends React.Component {
     event.preventDefault();
     const client = new Client('ws://127.0.0.1:8080/rpc');
     while (!client.ready) {
-      await new Promise({ resolve: r => setTimeout(r, 250) });
+      await new Promise((resolve, reject) => setTimeout(resolve, 250));
     }
     client.call(
       this.props.secret ? 'set_secret' : 'set_config',

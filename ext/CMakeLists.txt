@@ -1,10 +1,15 @@
 cmake_minimum_required(VERSION 3.10)
 
-# Add External Dependencies via a "add_subdirectory" call.
+if(NOT MSVC)
 set(CPR_FORCE_USE_SYSTEM_CURL ON CACHE BOOL "Force Use of System curl")
+endif()
 add_subdirectory(cpr-1.9.1)
 
-add_subdirectory(seasocks-1.4.4)
+if(MSVC)
+set(USE_ZLIB OFF)
+set(BUILD_SHARED_LIBS OFF)
+endif()
+add_subdirectory(IXWebSocket)
 add_subdirectory(tinyxml2-9.0.0)
 
 include(gumbo.cmake)

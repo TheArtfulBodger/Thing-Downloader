@@ -20,7 +20,7 @@ std::string td::web::thin_downloader::get_conf(std::string key)
 
 std::string td::web::thin_downloader::get_outpath_folder()
 {
-    return outpath;
+    return outpath.string();
 }
 
 void td::web::thin_downloader::add_job(std::string key, std::string name, std::string data)

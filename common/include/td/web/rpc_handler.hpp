@@ -1,8 +1,8 @@
 #pragma once
 
 #include <functional>
+#include <ixwebsocket/IXWebSocketServer.h>
 #include <json.hpp>
-#include <seasocks/Server.h>
 #include <unordered_map>
 
 #include <td/web/manager.hpp>
@@ -22,14 +22,28 @@ enum rpc_error {
     /* -32000 to -32099	Server error	Reserved for implementation-defined server-errors. */
 };
 
-struct rpc_handler : seasocks::WebSocket::Handler {
+/**
+ * @brief Handler type for RPC websockets, inherits from seasocks base type.
+ *
+ */
+struct rpc_handler {
 
-    void onConnect(seasocks::WebSocket* socket) override;
+    /**
+     * @brief handles a request sent, as a json_rpc request
+     *
+     * @param sock the websockets object
+     * @param data the data sent, as a C-Style string
+     */
+    void onData(
+        std::shared_ptr<ix::ConnectionState>,
+        ix::WebSocket&,
+        const ix::WebSocketMessagePtr&);
 
-    void onData(seasocks::WebSocket* sock, const char* data) override;
-
-    void onDisconnect(seasocks::WebSocket* socket) override;
-
+    /**
+     * @brief Construct a new rpc handler object
+     *
+     * @param dl pointer to the downloader object
+     */
     explicit rpc_handler(std::shared_ptr<td::web::downloader> dl);
 
 private:
