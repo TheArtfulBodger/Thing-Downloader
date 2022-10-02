@@ -24,8 +24,6 @@ jobs:
     strategy:
       matrix:
         Build-Config: 
-        - Debug
-        - Release
         - RelWithDebInfo
         - MinSizeRel
     needs: Gatsby-Build
