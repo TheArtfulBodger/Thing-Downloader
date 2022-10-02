@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 
+# Zlib at the start
+include(zlib.cmake)
+
 # Add External Dependencies via a "add_subdirectory" call.
 if(NOT MSVC)
 set(CPR_FORCE_USE_SYSTEM_CURL ON CACHE BOOL "Force Use of System curl")
@@ -10,7 +13,6 @@ add_subdirectory(IXWebSocket)
 add_subdirectory(tinyxml2-9.0.0)
 
 include(gumbo.cmake)
-include(zlib.cmake)
 
 install(TARGETS gumbo tinyxml
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
