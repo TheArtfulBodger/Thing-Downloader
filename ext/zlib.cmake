@@ -1,4 +1,6 @@
 if(MSVC)
+    include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
+
     ExternalProject_Add(zlib
     GIT_REPOSITORY "${git_protocol}://github.com/madler/zlib.git"
     GIT_TAG "v1.2.12"
