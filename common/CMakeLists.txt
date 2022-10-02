@@ -16,7 +16,7 @@ target_include_directories(td PUBLIC
     ${CMAKE_SOURCE_DIR}/pluginspec
 )
 
-target_link_libraries(td dl)
+target_link_libraries(td dl pthread)
 target_compile_features(td PUBLIC cxx_std_17)
 
 add_library(td_rpc
