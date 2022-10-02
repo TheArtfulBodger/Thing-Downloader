@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+
 add_library(td STATIC
     src/plugin.cpp
     src/web/manager/thread_loop.cpp
@@ -20,7 +22,7 @@ target_link_libraries(td dl pthread)
 endif()
 target_compile_features(td PUBLIC cxx_std_17)
 
-add_library(td_rpc STATIC
+add_library(td_rpc
     src/web/rpc/handler.cpp
     src/web/rpc/populate_functions.cpp
 
@@ -28,7 +30,7 @@ add_library(td_rpc STATIC
     src/web/rpc/functions/plugins.cpp
 )
 
-target_include_directories(td_rpc PUBLIC
+target_include_directories(td_rpc
     include
     ${CMAKE_SOURCE_DIR}/ext
     ${CMAKE_SOURCE_DIR}/pluginspec

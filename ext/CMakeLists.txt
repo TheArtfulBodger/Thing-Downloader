@@ -8,6 +8,7 @@ add_subdirectory(cpr-1.9.1)
 
 if(MSVC)
 set(USE_ZLIB OFF)
+set(BUILD_SHARED_LIBS ON)
 endif()
 add_subdirectory(IXWebSocket)
 add_subdirectory(tinyxml2-9.0.0)
