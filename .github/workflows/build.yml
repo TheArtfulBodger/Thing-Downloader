@@ -53,5 +53,33 @@ jobs:
       with:
         name: Linux Bundle ${{ matrix.Build-Config }}
         path: prefix
+  Windows-Build:
+    strategy:
+      matrix:
+        Build-Config: 
+        - RelWithDebInfo
+        - MinSizeRel
+    needs: Gatsby-Build
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Get latest CMake and ninja
+      uses: lukka/get-cmake@latest
+    - name: Generate Makefiles
+      run: mkdir _build; cd _build; cmake .. -DCMAKE_INSTALL_PREFIX=../prefix -DCPR_FORCE_USE_SYSTEM_CURL=OFF -DCMAKE_BUILD_TYPE=${{ matrix.Build-Config }}
+    - name: Build
+      run: cd _build; cmake --build .
+    - name: Install
+      run: cd _build; cmake --build . --target install
+    - name: Add frontend
+      uses: actions/download-artifact@v3
+      with:
+        name: Frontend Content
+        path: prefix/share/td/frontend
+    - name: Upload Build
+      uses: actions/upload-artifact@v3
+      with:
+        name: Windows Bundle ${{ matrix.Build-Config }}
+        path: prefix
     
 
