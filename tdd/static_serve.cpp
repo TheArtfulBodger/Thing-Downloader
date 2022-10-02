@@ -21,8 +21,8 @@ ix::HttpResponsePtr static_serve(std::filesystem::path frontend_dir, ix::HttpReq
         }
     }
 
-    if(!std::filesystem::exists(fpath) || std::filesystem::is_directory(fpath)){
-        fpath = frontend_dir/"404.html";
+    if (!std::filesystem::exists(fpath) || std::filesystem::is_directory(fpath)) {
+        fpath = frontend_dir / "404.html";
     }
 
     std::string content;
