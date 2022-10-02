@@ -3,11 +3,8 @@
 #include <td/json_store.hpp>
 #include <td/web/manager.hpp>
 
+#include <ixwebsocket/IXWebSocketServer.h>
 #include <memory>
-
-#include <seasocks/PrintfLogger.h>
-#include <seasocks/Server.h>
-
 #include <td/web/rpc_handler.hpp>
 
 int main(int argc, char** argv)
@@ -32,9 +29,30 @@ int main(int argc, char** argv)
         }
     }
 
-    seasocks::Server server(std::make_shared<seasocks::PrintfLogger>(seasocks::Logger::Level::Warning));
-    server.addWebSocketHandler("/rpc", std::make_shared<td::web::rpc_handler>(d));
-    server.serve(frontend_dir.c_str(), 8080);
+    int port = 8080;
+    std::string host("0.0.0.0"); // If you need this server to be accessible on a different machine, use "0.0.0.0"
+    ix::WebSocketServer server(port, host);
+
+    td::web::rpc_handler handler(d);
+
+    auto fn = std::bind(
+        &td::web::rpc_handler::onData,
+        &handler,
+        std::placeholders::_1,
+        std::placeholders::_2,
+        std::placeholders::_3);
+    server.setOnClientMessageCallback(fn);
+
+    auto res = server.listen();
+    if (!res.first) {
+        // Error handling
+        return 1;
+    }
+
+    server.disablePerMessageDeflate();
+
+    server.start();
+    server.wait();
 
     return 0;
 }

@@ -6,15 +6,17 @@ td::web::rpc_handler::rpc_handler(std::shared_ptr<td::web::downloader> dl)
     populate_functions();
 }
 
-void td::web::rpc_handler::onConnect(seasocks::WebSocket* socket) { }
-void td::web::rpc_handler::onDisconnect(seasocks::WebSocket* socket) { }
-
-void td::web::rpc_handler::onData(seasocks::WebSocket* socket, const char* data)
+void td::web::rpc_handler::onData(
+    std::shared_ptr<ix::ConnectionState> connectionState,
+    ix::WebSocket& socket,
+    const ix::WebSocketMessagePtr& msg)
 {
+    if (msg->type == ix::WebSocketMessageType::Message)
+    {
     nlohmann::json j;
     try {
         try {
-            j = nlohmann::json::parse(data);
+            j = nlohmann::json::parse(msg->str);
         } catch (nlohmann::json::parse_error&) {
             throw std::make_pair(parse_error, "Parser Error");
         }
@@ -46,7 +48,7 @@ void td::web::rpc_handler::onData(seasocks::WebSocket* socket, const char* data)
             { "result", result },
             { "id", j["id"] }
         };
-        socket->send(res.dump());
+        socket.send(res.dump());
 
     } catch (std::pair<td::web::rpc_error, std::string>& p) {
         nlohmann::json err = {
@@ -54,13 +56,14 @@ void td::web::rpc_handler::onData(seasocks::WebSocket* socket, const char* data)
             { "error", { { "code", static_cast<int>(p.first) }, { "message", p.second } } },
             { "id", j["id"] }
         };
-        socket->send(err.dump());
+        socket.send(err.dump());
     } catch (std::pair<td::web::rpc_error, char const*>& p) {
         nlohmann::json err = {
             { "jsonrpc", "2.0" },
             { "error", { { "code", static_cast<int>(p.first) }, { "message", p.second } } },
             { "id", j["id"] }
         };
-        socket->send(err.dump());
+        socket.send(err.dump());
     }
+}
 }

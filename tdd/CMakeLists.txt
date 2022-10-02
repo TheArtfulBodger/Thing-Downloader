@@ -11,7 +11,7 @@ include_directories(
 add_executable(tdd main.cpp)
 target_compile_features(tdd PUBLIC cxx_std_17)
 
-target_link_libraries(tdd td td_rpc seasocks)
+target_link_libraries(tdd td td_rpc ixwebsocket)
 
 install(TARGETS tdd
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
