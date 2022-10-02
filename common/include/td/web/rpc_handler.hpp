@@ -1,8 +1,8 @@
 #pragma once
 
 #include <functional>
+#include <ixwebsocket/IXWebSocketServer.h>
 #include <json.hpp>
-#include <seasocks/Server.h>
 #include <unordered_map>
 
 #include <td/web/manager.hpp>
@@ -26,13 +26,7 @@ enum rpc_error {
  * @brief Handler type for RPC websockets, inherits from seasocks base type.
  *
  */
-struct rpc_handler : seasocks::WebSocket::Handler {
-
-    /**
-     * @brief function to perform when a websocket connects. In this case it does nothing.
-     * @param socket the websockets object
-     */
-    void onConnect(seasocks::WebSocket* socket) override;
+struct rpc_handler {
 
     /**
      * @brief handles a request sent, as a json_rpc request
@@ -40,13 +34,10 @@ struct rpc_handler : seasocks::WebSocket::Handler {
      * @param sock the websockets object
      * @param data the data sent, as a C-Style string
      */
-    void onData(seasocks::WebSocket* sock, const char* data) override;
-
-    /**
-     * @brief function to perform when a websocket disconnects. In this case it does nothing.
-     * @param socket the websockets object
-     */
-    void onDisconnect(seasocks::WebSocket* socket) override;
+    void onData(
+        std::shared_ptr<ix::ConnectionState>,
+        ix::WebSocket&,
+        const ix::WebSocketMessagePtr&);
 
     /**
      * @brief Construct a new rpc handler object

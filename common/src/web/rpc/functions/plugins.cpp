@@ -1,6 +1,6 @@
 #include <td/web/rpc_functions.hpp>
 
-td::web::rpc_t td::web::rpc::get_plugins = [](std::shared_ptr<downloader> dl, nlohmann::json& /*params*/) {
+td::web::rpc_t td::web::rpc::get_plugins = [](std::shared_ptr<td::web::downloader> dl, nlohmann::json& /*params*/) {
     nlohmann::json l;
     l["loaded"] = nlohmann::json::object();
     for (auto& c : dl->get_plugins()) {
@@ -10,7 +10,7 @@ td::web::rpc_t td::web::rpc::get_plugins = [](std::shared_ptr<downloader> dl, nl
     return l;
 };
 
-td::web::rpc_t td::web::rpc::load_plugin = [](std::shared_ptr<downloader> dl, nlohmann::json& params) {
+td::web::rpc_t td::web::rpc::load_plugin = [](std::shared_ptr<td::web::downloader> dl, nlohmann::json& params) {
     if (!params["plugin"].is_string()) {
         throw std::make_pair(td::web::invalid_params, std::string("plugin in params should be string: ") + params["plugin"].type_name());
     }
@@ -22,7 +22,7 @@ td::web::rpc_t td::web::rpc::load_plugin = [](std::shared_ptr<downloader> dl, nl
     }
 };
 
-td::web::rpc_t td::web::rpc::set_secret = [](std::shared_ptr<downloader> dl, nlohmann::json& p) {
+td::web::rpc_t td::web::rpc::set_secret = [](std::shared_ptr<td::web::downloader> dl, nlohmann::json& p) {
     if (!p["plugin"].is_string()) {
         throw std::make_pair(td::web::invalid_params, std::string("plugin in params should be string: ") + p["plugin"].type_name());
     }
@@ -45,7 +45,7 @@ td::web::rpc_t td::web::rpc::set_secret = [](std::shared_ptr<downloader> dl, nlo
     return nlohmann::json { { "success", true } };
 };
 
-td::web::rpc_t td::web::rpc::set_config = [](std::shared_ptr<downloader> dl, nlohmann::json& p) {
+td::web::rpc_t td::web::rpc::set_config = [](std::shared_ptr<td::web::downloader> dl, nlohmann::json& p) {
     if (!p["plugin"].is_string()) {
         throw std::make_pair(td::web::invalid_params, std::string("plugin in params should be string: ") + p["plugin"].type_name());
     }

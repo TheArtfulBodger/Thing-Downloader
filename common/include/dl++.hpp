@@ -2,7 +2,11 @@
 #include <functional>
 #include <stdexcept>
 
+#ifdef _MSC_VER
+#include <windows.h>
+#else
 #include <dlfcn.h>
+#endif
 
 /**
  * @brief A simple wrapper around libdl in modern C++
@@ -10,6 +14,62 @@
  *
  */
 namespace libdl {
+
+/**
+ * @brief
+ *
+ * @param name
+ * @return void* pointer returned by dlopen (or equivalent)
+ */
+inline void* open_lib(std::string name)
+{
+#ifdef _MSC_VER
+    return LoadLibraryA(name.c_str());
+#else
+    return dlopen(name.c_str(), RTLD_NOW);
+#endif
+}
+
+/**
+ * @brief
+ *
+ * @param name
+ * @return void* pointer returned by dlopen (or equivalent)
+ */
+inline void close_lib(void* handle)
+{
+#ifdef _MSC_VER
+    FreeLibrary(static_cast<HMODULE>(handle));
+#else
+    dlclose(handle);
+#endif
+}
+
+/**
+ * @brief
+ *
+ * @param name
+ * @return void* pointer returned by dlopen (or equivalent)
+ */
+inline std::string error()
+{
+#ifdef _MSC_VER
+    LPVOID message_buffer;
+    DWORD dw = GetLastError();
+
+    FormatMessage(
+        FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+        NULL,
+        dw,
+        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+        (LPTSTR)&message_buffer,
+        0, NULL);
+
+    return std::string(static_cast<char*>(message_buffer));
+#else
+    return std::string(dlerror());
+#endif
+}
 
 /**
  * @brief Get the value object
@@ -22,7 +82,12 @@ namespace libdl {
 template <typename var_t>
 inline var_t get_value(void* handle, std::string name)
 {
+#ifdef _MSC_VER
+    void* sym = GetProcAddress(static_cast<HMODULE>(handle), name.c_str());
+#else
     void* sym = dlsym(handle, name.c_str());
+#endif
+
     if (sym == nullptr) {
         throw std::runtime_error("ERROR: Symbol " + name + " is nullptr");
     }
@@ -39,11 +104,16 @@ template <typename func_t>
  */
 inline std::function<func_t> get_function(void* handle, std::string name)
 {
-    void* SyM = dlsym(handle, name.c_str());
-    if (SyM == nullptr) {
+#ifdef _MSC_VER
+    void* sym = GetProcAddress(static_cast<HMODULE>(handle), name.c_str());
+#else
+    void* sym = dlsym(handle, name.c_str());
+#endif
+
+    if (sym == nullptr) {
         throw std::runtime_error("ERROR: Symbol " + name + " is nullptr");
     }
-    return reinterpret_cast<func_t*>(SyM);
+    return reinterpret_cast<func_t*>(sym);
 }
 
 /**

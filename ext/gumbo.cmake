@@ -23,4 +23,10 @@ target_include_directories(gumbo PUBLIC
     gumbo-query/src
 )
 
+if(MSVC)
+target_include_directories(gumbo PUBLIC
+    gumbo-parser-0.10.1/visualc/include
+)
+endif()
+
 set_target_properties(gumbo PROPERTIES POSITION_INDEPENDENT_CODE ON)
