@@ -34,7 +34,7 @@ int main(int argc, char** argv)
 
     seasocks::Server server(std::make_shared<seasocks::PrintfLogger>(seasocks::Logger::Level::Warning));
     server.addWebSocketHandler("/rpc", std::make_shared<td::web::rpc_handler>(d));
-    server.serve(frontend_dir, 8080);
+    server.serve(frontend_dir.c_str(), 8080);
 
     return 0;
 }
