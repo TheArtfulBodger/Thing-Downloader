@@ -1,7 +1,12 @@
 name: Lint
-on: push
+on: 
+  push:
+    branches:
+      - main
+  pull_request:
+
 jobs:
-  eslint:
+  ESLint:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -9,9 +14,58 @@ jobs:
       run: cd frontend; yarn
     - name: Run ESLint
       run: cd frontend; yarn eslint . --ext .js,.jsx,.ts,.tsx
-  spelling:
+  Spelling:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - name: typos-action
       uses: crate-ci/typos@v1.0.4
+  Clang-Format:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: jidicula/clang-format-action@v4.9.0
+      with:
+        clang-format-version: '14'
+        check-path: 'common'
+        fallback-style: 'WebKit'
+    - uses: jidicula/clang-format-action@v4.9.0
+      with:
+        clang-format-version: '14'
+        check-path: 'plugins'
+        fallback-style: 'WebKit'
+    - uses: jidicula/clang-format-action@v4.9.0
+      with:
+        clang-format-version: '14'
+        check-path: 'pluginspec'
+        fallback-style: 'WebKit'
+    - uses: jidicula/clang-format-action@v4.9.0
+      with:
+        clang-format-version: '14'
+        check-path: 'tools'
+        fallback-style: 'WebKit'
+    - uses: jidicula/clang-format-action@v4.9.0
+      with:
+        clang-format-version: '14'
+        check-path: 'tdd'
+        fallback-style: 'WebKit'
+  Clang-Tidy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Get latest CMake and ninja
+      uses: lukka/get-cmake@latest
+    - name: Install Curl
+      run: sudo apt install -y libcurl4-openssl-dev libssl-dev
+    - name: Generate Makefiles
+      run: |
+        mkdir _build;
+        cd _build;
+        cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+    - name: Run clang-tidy
+      uses: TheArtfulBodger/action-clang-tidy@master
+      with:
+        scandir: '.'
+        builddir: '_build'
+        excludedirs: 'ext,_build'
+        extensions: 'c,h,C,H,cpp,hpp,cc,hh,c++,h++,cxx,hxx'
