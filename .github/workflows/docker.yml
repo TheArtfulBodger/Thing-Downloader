@@ -1,7 +1,9 @@
 name: Build Docker Image
 
-on:
+on: 
   push:
+    branches:
+      - main
   pull_request:
 
 jobs:
@@ -13,14 +15,11 @@ jobs:
           - linux/arm64
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Checkout
+      - name: Checkout
         uses: actions/checkout@v3
-      -
-        name: Set up QEMU dependency
+      - name: Set up QEMU dependency
         uses: docker/setup-qemu-action@v1
-      -
-        name: Docker meta
+      - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
         with:
@@ -32,8 +31,7 @@ jobs:
             type=ref,event=pr
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
-      -
-        name: Login to DockerHub
+      - name: Login to DockerHub
         if: github.event_name != 'pull_request'
         uses: docker/login-action@v2
         with:

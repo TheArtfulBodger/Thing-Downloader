@@ -1,0 +1,57 @@
+name: Build Native Binaries
+
+on: 
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  Gatsby-Build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install modules
+      run: cd frontend; yarn
+    - name: Build
+      run: cd frontend; yarn build
+    - name: Upload Build
+      uses: actions/upload-artifact@v3
+      with:
+        name: Frontend Content
+        path: frontend/public
+  Linux-Build:
+    strategy:
+      matrix:
+        Build-Config: 
+        - RelWithDebInfo
+        - MinSizeRel
+    needs: Gatsby-Build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Get latest CMake and ninja
+      uses: lukka/get-cmake@latest
+    - name: Set up GCC
+      uses: egor-tensin/setup-gcc@v1
+      with:
+        version: latest
+        platform: x64
+    - name: Generate Makefiles
+      run: mkdir _build; cd _build; cmake .. -DCMAKE_INSTALL_PREFIX=../prefix -DCPR_FORCE_USE_SYSTEM_CURL=OFF -DCMAKE_BUILD_TYPE=${{ matrix.Build-Config }}
+    - name: Build
+      run: cd _build; cmake --build .
+    - name: Install
+      run: cd _build; cmake --build . --target install
+    - name: Add frontend
+      uses: actions/download-artifact@v3
+      with:
+        name: Frontend Content
+        path: prefix/share/td/frontend
+    - name: Upload Build
+      uses: actions/upload-artifact@v3
+      with:
+        name: Linux Bundle ${{ matrix.Build-Config }}
+        path: prefix
+    
+
