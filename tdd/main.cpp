@@ -1,11 +1,13 @@
 #include <iostream>
-#include <json.hpp>
+
 #include <td/json_store.hpp>
 #include <td/web/manager.hpp>
 
-#include <ixwebsocket/IXWebSocketServer.h>
+#include <ixwebsocket/IXHttpServer.h>
 #include <memory>
 #include <td/web/rpc_handler.hpp>
+
+ix::HttpResponsePtr static_serve(std::filesystem::path, ix::HttpRequestPtr, std::shared_ptr<ix::ConnectionState>);
 
 int main(int argc, char** argv)
 {
@@ -31,17 +33,23 @@ int main(int argc, char** argv)
 
     int port = 8080;
     std::string host("0.0.0.0"); // If you need this server to be accessible on a different machine, use "0.0.0.0"
-    ix::WebSocketServer server(port, host);
+    ix::HttpServer server(port, host);
 
     td::web::rpc_handler handler(d);
 
-    auto fn = std::bind(
+    server.setOnClientMessageCallback(std::bind(
         &td::web::rpc_handler::onData,
         &handler,
         std::placeholders::_1,
         std::placeholders::_2,
-        std::placeholders::_3);
-    server.setOnClientMessageCallback(fn);
+        std::placeholders::_3));
+
+    server.setOnConnectionCallback(
+        std::bind(
+            static_serve,
+            frontend_dir,
+            std::placeholders::_1,
+            std::placeholders::_2));
 
     auto res = server.listen();
     if (!res.first) {

@@ -8,7 +8,7 @@ include_directories(
 
 )
 
-add_executable(tdd main.cpp)
+add_executable(tdd main.cpp static_serve.cpp)
 target_compile_features(tdd PUBLIC cxx_std_17)
 
 target_link_libraries(tdd td td_rpc ixwebsocket)
