@@ -17,6 +17,13 @@ jobs:
         name: frontend_bundle
         path: frontend/public
   Linux-Build:
+    strategy:
+      matrix:
+        Build-Config: 
+        - Debug
+        - Release
+        - RelWithDebInfo
+        - MinSizeRel
     needs: Gatsby-Build
     runs-on: ubuntu-latest
     steps:
@@ -29,7 +36,7 @@ jobs:
         version: latest
         platform: x64
     - name: Generate Makefiles
-      run: mkdir _build; cd _build; cmake .. -DCMAKE_INSTALL_PREFIX=../prefix -DCPR_FORCE_USE_SYSTEM_CURL=OFF
+      run: mkdir _build; cd _build; cmake .. -DCMAKE_INSTALL_PREFIX=../prefix -DCPR_FORCE_USE_SYSTEM_CURL=OFF -DCMAKE_BUILD_TYPE=${{ matrix.Build-Config }}
     - name: Build
       run: cd _build; cmake --build .
     - name: Install
@@ -42,7 +49,7 @@ jobs:
     - name: Upload Build
       uses: actions/upload-artifact@v3
       with:
-        name: linux_bundle
+        name: Linux Bundle ${{ matrix.Build-Config }}
         path: prefix
     
 
