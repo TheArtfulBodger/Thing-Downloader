@@ -10,6 +10,7 @@ add_subdirectory(seasocks-1.4.4)
 add_subdirectory(tinyxml2-9.0.0)
 
 include(gumbo.cmake)
+include(zlib.cmake)
 
 install(TARGETS gumbo tinyxml
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
