@@ -27,7 +27,9 @@ set(LIBS
     humble-bundle
 )
 
+if(NOT MSVC)
 list(APPEND LIBS operavision)
+endif()
 
 install(TARGETS ${LIBS}
     LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/plugins)
