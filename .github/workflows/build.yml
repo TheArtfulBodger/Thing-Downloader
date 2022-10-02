@@ -44,7 +44,7 @@ jobs:
     - name: Install
       run: cd _build; cmake --build . --target install
     - name: Delete unneeded files
-      run: Remove-Item -Recurse -Force prefix/include
+      run: rm -rf prefix/include
     - name: Add frontend
       uses: actions/download-artifact@v3
       with:
@@ -74,7 +74,7 @@ jobs:
     - name: Install
       run: cd _build; cmake --build . --config ${{ matrix.Build-Config }} --target install
     - name: Delete unneeded files
-      run: rm -rf  prefix/lib prefix/include
+      run: Remove-Item -Recurse -Force  prefix/include
     - name: Add frontend
       uses: actions/download-artifact@v3
       with:
