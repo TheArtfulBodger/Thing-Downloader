@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
-add_library(td STATIC
+add_library(td
     src/plugin.cpp
     src/web/manager/thread_loop.cpp
     src/web/manager/thin.cpp
@@ -30,7 +30,7 @@ add_library(td_rpc
     src/web/rpc/functions/plugins.cpp
 )
 
-target_include_directories(td_rpc
+target_include_directories(td_rpc PUBLIC
     include
     ${CMAKE_SOURCE_DIR}/ext
     ${CMAKE_SOURCE_DIR}/pluginspec
