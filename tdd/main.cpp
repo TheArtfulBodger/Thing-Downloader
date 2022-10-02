@@ -24,7 +24,7 @@ int main(int argc, char** argv)
 
     for (const auto& entry : std::filesystem::directory_iterator(dir)) {
         try {
-            d->add_plugin(entry.path());
+            d->add_plugin(entry.path().string());
 
         } catch (std::exception& e) {
             std::cout << e.what() << std::endl;

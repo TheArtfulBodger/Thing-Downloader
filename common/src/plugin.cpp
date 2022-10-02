@@ -10,7 +10,7 @@ td::plugin::plugin(std::string& path)
     this->handle = libdl::open_lib(path.c_str());
 
     if (this->handle == nullptr) {
-        std::cout << dlerror() << std::endl;
+        std::cout << libdl::error() << std::endl;
     }
 
     VAR_FROM_DLL(key)
@@ -26,5 +26,5 @@ td::plugin::plugin(std::string& path)
 
 td::plugin::~plugin()
 {
-    dlclose(this->handle);
+    libdl::close_lib(this->handle);
 }

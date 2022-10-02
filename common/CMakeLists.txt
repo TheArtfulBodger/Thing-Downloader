@@ -15,8 +15,9 @@ target_include_directories(td PUBLIC
     ${CMAKE_SOURCE_DIR}/ext
     ${CMAKE_SOURCE_DIR}/pluginspec
 )
-
+if(NOT WIN32)
 target_link_libraries(td dl pthread)
+endif()
 target_compile_features(td PUBLIC cxx_std_17)
 
 add_library(td_rpc
@@ -34,7 +35,10 @@ target_include_directories(td_rpc PUBLIC
     ${CMAKE_SOURCE_DIR}/ext/IXWebSocket
 )
 
-target_link_libraries(td_rpc td dl ixwebsocket)
+target_link_libraries(td_rpc td ixwebsocket)
+if(NOT WIN32)
+target_link_libraries(td _rpc dl pthread)
+endif()
 target_compile_features(td_rpc PUBLIC cxx_std_17)
 
 install(TARGETS td td_rpc
