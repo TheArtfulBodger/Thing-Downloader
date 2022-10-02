@@ -37,7 +37,7 @@ target_include_directories(td_rpc PUBLIC
 
 target_link_libraries(td_rpc td ixwebsocket)
 if(NOT WIN32)
-target_link_libraries(td _rpc dl pthread)
+target_link_libraries(td_rpc dl pthread)
 endif()
 target_compile_features(td_rpc PUBLIC cxx_std_17)
 
