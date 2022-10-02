@@ -14,7 +14,7 @@ jobs:
     - name: Upload Build
       uses: actions/upload-artifact@v3
       with:
-        name: frontend_bundle
+        name: Frontend Content
         path: frontend/public
   Linux-Build:
     strategy:
@@ -44,7 +44,7 @@ jobs:
     - name: Add frontend
       uses: actions/download-artifact@v3
       with:
-        name: frontend_bundle
+        name: Frontend Content
         path: prefix/share/td/frontend
     - name: Upload Build
       uses: actions/upload-artifact@v3
