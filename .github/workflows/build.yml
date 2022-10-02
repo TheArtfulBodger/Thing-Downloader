@@ -66,7 +66,7 @@ jobs:
     - name: Get latest CMake and ninja
       uses: lukka/get-cmake@latest
     - name: Generate Makefiles
-      run: mkdir _build; cd _build; cmake .. -DCMAKE_INSTALL_PREFIX=../prefix -DCPR_FORCE_USE_SYSTEM_CURL=OFF -DCMAKE_BUILD_TYPE=${{ matrix.Build-Config }}
+      run: mkdir _build; cd _build; cmake .. -DCMAKE_INSTALL_PREFIX="../prefix" -DCPR_FORCE_USE_SYSTEM_CURL=OFF -DCMAKE_BUILD_TYPE=${{ matrix.Build-Config }}
     - name: Build
       run: cd _build; cmake --build .
     - name: Install
