@@ -23,7 +23,7 @@ jobs:
     - name: Get latest CMake and ninja
       uses: lukka/get-cmake@latest
     - name: Generate Makefiles
-      run: mkdir _build; cd _build; cmake .. -DCMAKE_INSTALL_PREFIX=../prefix
+      run: mkdir _build; cd _build; cmake .. -DCMAKE_INSTALL_PREFIX=../prefix -DCPR_FORCE_USE_SYSTEM_CURL=OFF
     - name: Build
       run: cd _build; cmake --build .
     - name: Install
