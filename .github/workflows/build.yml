@@ -33,7 +33,7 @@ jobs:
     - name: Build
       run: cd _build; cmake --build .
     - name: Install
-      run: cmake --build . --target install
+      run: cd _build; cmake --build . --target install
     - name: Add frontend
       uses: actions/download-artifact@v3
       with:
