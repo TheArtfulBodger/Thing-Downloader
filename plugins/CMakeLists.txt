@@ -21,5 +21,13 @@ add_library(apod SHARED apod.cpp)
 target_compile_features(apod PUBLIC cxx_std_17)
 target_link_libraries(apod cpr::cpr)
 
-install(TARGETS apod itchio operavision humble-bundle
+set(LIBS
+    apod
+    itchio
+    humble-bundle
+)
+
+list(APPEND LIBS operavision)
+
+install(TARGETS ${LIBS}
     LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/plugins)
