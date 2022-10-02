@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 
+if(NOT MSVC)
 add_subdirectory(operavision)
+endif()
 add_subdirectory(itchio)
 add_subdirectory(humble-bundle)
 
