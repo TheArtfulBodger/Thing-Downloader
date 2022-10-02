@@ -17,6 +17,7 @@ int main(int argc, char** argv)
 
     std::filesystem::path exe(argv[0]);
     auto dir = exe.parent_path().parent_path() / "plugins";
+    auto frontend_dir = exe.parent_path().parent_path() / "share/td/frontend";
 
     std::filesystem::path p(".");
 
@@ -33,7 +34,7 @@ int main(int argc, char** argv)
 
     seasocks::Server server(std::make_shared<seasocks::PrintfLogger>(seasocks::Logger::Level::Warning));
     server.addWebSocketHandler("/rpc", std::make_shared<td::web::rpc_handler>(d));
-    server.serve("/usr/share/td/frontend", 8080);
+    server.serve(frontend_dir, 8080);
 
     return 0;
 }

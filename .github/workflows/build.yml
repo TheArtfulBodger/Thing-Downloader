@@ -1,0 +1,42 @@
+name: Build Native Binaries
+
+on: [push, pull_request]
+
+jobs:
+  Gatsby-Build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install modules
+      run: cd frontend; yarn
+    - name: Build
+      run: cd frontend; yarn build
+    - name: Upload Build
+      uses: actions/upload-artifact@v3
+      with:
+        name: frontend_bundle
+        path: frontend/public
+  Linux-Build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Get latest CMake and ninja
+      uses: lukka/get-cmake@latest
+    - name: Generate Makefiles
+      run: mkdir _build; cd _build; cmake .. -DCMAKE_INSTALL_PREFIX=../prefix
+    - name: Build
+      run: cd _build; cmake --build .
+    - name: Install
+      run: cmake --install .
+    - name: Add frontend
+      uses: actions/download-artifact@v3
+      with:
+        name: frontend_bundle
+        path: prefix/share/td/frontend
+    - name: Upload Build
+      uses: actions/upload-artifact@v3
+      with:
+        name: linux_bundle
+        path: prefix
+    
+
