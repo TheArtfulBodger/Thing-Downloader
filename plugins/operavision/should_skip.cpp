@@ -17,8 +17,8 @@ bool should_skip(const td::dl& base, const td::job& job)
         auto mkv = folder / (o.slug + ".mkv");
         auto webm = folder / (o.slug + ".webm");
         return std::filesystem::exists(mp4)
-            or std::filesystem::exists(mkv)
-            or std::filesystem::exists(webm);
+            || std::filesystem::exists(mkv)
+            || std::filesystem::exists(webm);
     }
     case download_mode_desc: {
         auto path = std::filesystem::path(base->get_outpath_folder()) / o.company / o.name / (o.slug + ".nfo");
