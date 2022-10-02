@@ -2,12 +2,11 @@
 #include <memory>
 #include <string>
 #include <vector>
- 
-#if defined(_MSC_VER) && !defined(_DLL) 
-    /*Enabled as "export" while compiling the dll project*/
-    #define DLLEXPORT __declspec(dllexport)  
-#endif
 
+#if defined(_MSC_VER) && !defined(_DLL)
+/*Enabled as "export" while compiling the dll project*/
+#define DLLEXPORT __declspec(dllexport)
+#endif
 
 namespace td {
 
