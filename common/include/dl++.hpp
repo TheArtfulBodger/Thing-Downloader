@@ -2,7 +2,11 @@
 #include <functional>
 #include <stdexcept>
 
+#ifdef _MSC_VER
+#include <libloaderapi.h>
+#else
 #include <dlfcn.h>
+#endif
 
 /**
  * @brief A simple wrapper around libdl in modern C++
@@ -10,6 +14,21 @@
  *
  */
 namespace libdl {
+
+/**
+ * @brief
+ *
+ * @param name
+ * @return void* pointer returned by dlopen (or equivalent)
+ */
+inline void* open_lib(std::string name)
+{
+#ifdef _MSC_VER
+    return LoadLibraryA(name.c_str());
+#else
+    return dlopen(name.c_str(), RTLD_NOW);
+#endif
+}
 
 /**
  * @brief Get the value object
@@ -22,7 +41,12 @@ namespace libdl {
 template <typename var_t>
 inline var_t get_value(void* handle, std::string name)
 {
+#ifdef _MSC_VER
+    void* sym = GetProcAddress(handle, name.c_str());
+#else
     void* sym = dlsym(handle, name.c_str());
+#endif
+
     if (sym == nullptr) {
         throw std::runtime_error("ERROR: Symbol " + name + " is nullptr");
     }
@@ -39,11 +63,16 @@ template <typename func_t>
  */
 inline std::function<func_t> get_function(void* handle, std::string name)
 {
-    void* SyM = dlsym(handle, name.c_str());
-    if (SyM == nullptr) {
+#ifdef _MSC_VER
+    void* sym = GetProcAddress(handle, name.c_str());
+#else
+    void* sym = dlsym(handle, name.c_str());
+#endif
+
+    if (sym == nullptr) {
         throw std::runtime_error("ERROR: Symbol " + name + " is nullptr");
     }
-    return reinterpret_cast<func_t*>(SyM);
+    return reinterpret_cast<func_t*>(sym);
 }
 
 /**

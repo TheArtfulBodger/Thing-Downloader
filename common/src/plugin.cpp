@@ -7,9 +7,7 @@
 
 td::plugin::plugin(std::string& path)
 {
-    // Add support for Windows LoadLibrary()
-
-    this->handle = dlopen(path.c_str(), RTLD_NOW);
+    this->handle = libdl::open_lib(path.c_str());
 
     if (this->handle == nullptr) {
         std::cout << dlerror() << std::endl;
