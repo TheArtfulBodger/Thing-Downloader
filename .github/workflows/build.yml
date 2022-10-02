@@ -68,9 +68,9 @@ jobs:
     - name: Generate Makefiles
       run: mkdir _build; cd _build; cmake .. -DCMAKE_INSTALL_PREFIX="../prefix" -DCPR_FORCE_USE_SYSTEM_CURL=OFF -DCMAKE_BUILD_TYPE=${{ matrix.Build-Config }}
     - name: Build
-      run: cd _build; cmake --build .
+      run: cd _build; cmake --build . --config ${{ matrix.Build-Config }}
     - name: Install
-      run: cd _build; cmake --build . --target install
+      run: cd _build; cmake --build . --config ${{ matrix.Build-Config }} --target install
     - name: Add frontend
       uses: actions/download-artifact@v3
       with:
