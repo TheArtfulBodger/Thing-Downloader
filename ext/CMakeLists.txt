@@ -6,7 +6,7 @@ set(CPR_FORCE_USE_SYSTEM_CURL ON CACHE BOOL "Force Use of System curl")
 endif()
 add_subdirectory(cpr-1.9.1)
 
-add_subdirectory(seasocks-1.4.4)
+add_subdirectory(IXWebSocket)
 add_subdirectory(tinyxml2-9.0.0)
 
 include(gumbo.cmake)

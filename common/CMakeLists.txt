@@ -31,10 +31,10 @@ target_include_directories(td_rpc PUBLIC
     include
     ${CMAKE_SOURCE_DIR}/ext
     ${CMAKE_SOURCE_DIR}/pluginspec
-    ${CMAKE_SOURCE_DIR}/ext/seasocks-1.4.4/src/main/c
+    ${CMAKE_SOURCE_DIR}/ext/IXWebSocket
 )
 
-target_link_libraries(td_rpc td dl seasocks)
+target_link_libraries(td_rpc td dl ixwebsocket)
 target_compile_features(td_rpc PUBLIC cxx_std_17)
 
 install(TARGETS td td_rpc
