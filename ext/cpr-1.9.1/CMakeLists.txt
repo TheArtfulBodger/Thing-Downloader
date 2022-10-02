@@ -196,7 +196,7 @@ else()
     # * from CMake script:
     #     SET(CURL_ZLIB OFF CACHE STRING "" FORCE)
     if (CURL_ZLIB OR CURL_ZLIB STREQUAL AUTO OR NOT DEFINED CACHE{CURL_ZLIB})
-        include(cmake/zlib_external.cmake)
+    #    include(cmake/zlib_external.cmake)
     endif()
 
     # We only need HTTP (and HTTPS) support:
