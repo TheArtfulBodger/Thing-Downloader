@@ -17,6 +17,7 @@ target_include_directories(td PUBLIC
 )
 
 target_link_libraries(td dl)
+target_compile_features(td PUBLIC cxx_std_17)
 
 add_library(td_rpc
     src/web/rpc/handler.cpp
@@ -34,6 +35,7 @@ target_include_directories(td_rpc PUBLIC
 )
 
 target_link_libraries(td_rpc td dl seasocks)
+target_compile_features(td_rpc PUBLIC cxx_std_17)
 
 install(TARGETS td td_rpc
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
