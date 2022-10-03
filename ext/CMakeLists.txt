@@ -11,10 +11,11 @@ set(BUILD_SHARED_LIBS OFF)
 endif()
 add_subdirectory(IXWebSocket)
 add_subdirectory(tinyxml2-9.0.0)
+add_subdirectory(tiny-process-library-v2.0.4)
 
 include(gumbo.cmake)
 
-install(TARGETS gumbo tinyxml
+install(TARGETS gumbo tinyxml tiny-process-library
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
