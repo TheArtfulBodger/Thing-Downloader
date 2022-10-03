@@ -16,11 +16,7 @@ add_library(apod SHARED apod.cpp)
 target_compile_features(apod PUBLIC cxx_std_17)
 target_link_libraries(apod cpr::cpr)
 
-set(LIBS apod itchio humble-bundle)
-
-if(NOT MSVC)
-  list(APPEND LIBS operavision)
-endif()
+set(LIBS apod itchio humble-bundle operavision)
 
 install(
   TARGETS ${LIBS}
