@@ -21,8 +21,6 @@ void download_video(const td::dl& base, const td::job& job)
     auto folder = std::filesystem::path(base->get_outpath_folder()) / o.company / o.name;
     std::filesystem::create_directories(folder);
 
-    std::stringstream stdout;
-
     TinyProcessLib::Process cmd(
         std::vector<std::string> { base->get_conf("YOUTUBE_DL_PATH"),
             "--write-sub",
