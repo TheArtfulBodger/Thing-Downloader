@@ -1,6 +1,6 @@
 #include <filesystem>
-#include <iostream>
 #include <fstream>
+#include <iostream>
 
 #include <ixwebsocket/IXHttpServer.h>
 
@@ -10,7 +10,7 @@ ix::HttpResponsePtr static_serve(std::filesystem::path frontend_dir, ix::HttpReq
 
     bool not_found = false;
     // Get Filename from URI
-    auto path = request->uri.substr(1, request->uri.find_first_of('?')-1);
+    auto path = request->uri.substr(1, request->uri.find_first_of('?') - 1);
     auto fpath = frontend_dir / path;
     std::cout << path << std::endl;
 
