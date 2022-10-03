@@ -4,6 +4,7 @@
 #include <td/web/manager.hpp>
 
 #include <ixwebsocket/IXHttpServer.h>
+#include <ixwebsocket/IXNetSystem.h>
 #include <memory>
 #include <td/web/rpc_handler.hpp>
 
@@ -11,6 +12,7 @@ ix::HttpResponsePtr static_serve(std::filesystem::path, ix::HttpRequestPtr, std:
 
 int main(int argc, char** argv)
 {
+    ix::initNetSystem();
     td::store_t secrets = std::make_shared<td::json_store>("secrets.json");
     td::store_t conf = std::make_shared<td::json_store>("conf.json");
 
@@ -24,7 +26,7 @@ int main(int argc, char** argv)
 
     for (const auto& entry : std::filesystem::directory_iterator(dir)) {
         try {
-            d->add_plugin(entry.path().string());
+            d->add_plugin(std::filesystem::absolute(entry.path()).string());
 
         } catch (std::exception& e) {
             std::cout << e.what() << std::endl;
@@ -53,6 +55,7 @@ int main(int argc, char** argv)
 
     auto res = server.listen();
     if (!res.first) {
+        std::cout << res.second << std::endl;
         // Error handling
         return 1;
     }
@@ -62,5 +65,6 @@ int main(int argc, char** argv)
     server.start();
     server.wait();
 
+    ix::uninitNetSystem();
     return 0;
 }
