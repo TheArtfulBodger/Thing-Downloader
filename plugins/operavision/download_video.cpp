@@ -26,10 +26,17 @@ void download_video(const td::dl& base, const td::job& job)
 {
     auto o = nlohmann::json::parse(job->get_job_data()).get<opera>();
 
-    auto folder = std::filesystem::path(base->get_outpath_folder()) / o.company / o.name;
+    std::string sanitised_company = o.company;
+    std::replace(sanitised_company.begin(), sanitised_company.end(), '/', '-');
+
+        std::string sanitised_name = o.name;
+    std::replace(sanitised_name.begin(), sanitised_name.end(), '/', '-');
+
+    auto folder = std::filesystem::path(base->get_outpath_folder()) /sanitised_company / sanitised_name;
     std::filesystem::create_directories(folder);
 
-    subprocess::Popen cmd = subprocess::RunBuilder({base->get_conf("YOUTUBE_DL_PATH"),
+    subprocess::Popen cmd = subprocess::RunBuilder({
+     base->get_conf("YOUTUBE_DL_PATH"),
          "--write-sub",
             "--all-subs",
             "--embed-subs",

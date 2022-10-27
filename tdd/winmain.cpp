@@ -9,6 +9,7 @@
 #include <td/web/rpc_handler.hpp>
 
 #include <windows.h>
+#include <shellapi.h>
 
 
 ix::HttpResponsePtr static_serve(std::filesystem::path, ix::HttpRequestPtr, std::shared_ptr<ix::ConnectionState>);
@@ -18,8 +19,11 @@ int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmd
     ix::initNetSystem();
     td::store_t secrets = std::make_shared<td::json_store>("secrets.json");
     td::store_t conf = std::make_shared<td::json_store>("conf.json");
+    std::string s(' ', MAX_PATH);
 
-    std::filesystem::path exe(argv[0]);
+    size_t sz = GetModuleFileNameA(nullptr, s.data(), MAX_PATH);
+
+    std::filesystem::path exe(s.c_str());
     auto dir = exe.parent_path().parent_path() / "plugins";
     auto frontend_dir = exe.parent_path().parent_path() / "share/td/frontend";
 
@@ -29,7 +33,7 @@ int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmd
 
     for (const auto& entry : std::filesystem::directory_iterator(dir)) {
         try {
-            if(entry.path().extension == ".dll"){
+            if (entry.path().extension() == ".dll") {
             d->add_plugin(std::filesystem::absolute(entry.path()).string());
             }
         } catch (std::exception& e) {
@@ -69,7 +73,7 @@ int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmd
     server.start();
 
     // Open web browser
-    ShellExecute(0, 0, L"http://localhost:8080", 0, 0 , SW_SHOW );
+    ShellExecuteA(0, 0, "http://localhost:8080", 0, 0 , SW_SHOW );
 
     // Create Notification Area Icon
 
