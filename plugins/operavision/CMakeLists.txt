@@ -7,9 +7,10 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/ext/tinyxml2-9.0.0
     ${CMAKE_SOURCE_DIR}/ext/gumbo-query/src
     ${CMAKE_SOURCE_DIR}/ext/gumbo-parser-0.10.1/src
+    ${CMAKE_SOURCE_DIR}/ext/subprocess-0.4.0/src/cpp
 
 )
 
 add_library(operavision SHARED details.cpp get_jobs.cpp should_skip.cpp download_description.cpp download_video.cpp)
 target_compile_features(operavision PUBLIC cxx_std_17)
-target_link_libraries(operavision cpr::cpr tinyxml gumbo)
+target_link_libraries(operavision cpr::cpr tinyxml gumbo subprocess)

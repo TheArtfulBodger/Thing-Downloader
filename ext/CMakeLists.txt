@@ -11,6 +11,7 @@ set(BUILD_SHARED_LIBS OFF)
 endif()
 add_subdirectory(IXWebSocket)
 add_subdirectory(tinyxml2-9.0.0)
+add_subdirectory(subprocess-0.4.0)
 
 include(gumbo.cmake)
 
