@@ -8,9 +8,8 @@
 #include <memory>
 #include <td/web/rpc_handler.hpp>
 
-#include <windows.h>
 #include <shellapi.h>
-
+#include <windows.h>
 
 ix::HttpResponsePtr static_serve(std::filesystem::path, ix::HttpRequestPtr, std::shared_ptr<ix::ConnectionState>);
 
@@ -34,7 +33,7 @@ int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmd
     for (const auto& entry : std::filesystem::directory_iterator(dir)) {
         try {
             if (entry.path().extension() == ".dll") {
-            d->add_plugin(std::filesystem::absolute(entry.path()).string());
+                d->add_plugin(std::filesystem::absolute(entry.path()).string());
             }
         } catch (std::exception& e) {
             std::cout << e.what() << std::endl;
@@ -73,11 +72,10 @@ int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmd
     server.start();
 
     // Open web browser
-    ShellExecuteA(0, 0, "http://localhost:8080", 0, 0 , SW_SHOW );
+    ShellExecuteA(0, 0, "http://localhost:8080", 0, 0, SW_SHOW);
 
     // Create Notification Area Icon
 
-    
     server.wait();
 
     ix::uninitNetSystem();
