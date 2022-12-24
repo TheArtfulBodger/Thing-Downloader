@@ -26,7 +26,6 @@ void get_jobs(const td::dl& base)
 
         opera o;
         std::string name;
-        o.name = name;
         name = title.find("h3").nodeAt(0).ownText();
         o.company = title.find(".titelSpan").nodeAt(0).text();
 
@@ -39,5 +38,7 @@ void get_jobs(const td::dl& base)
 
         o.operation = download_mode_desc;
         base->add_job(o.video_id + "_description", name + " (Description)", nlohmann::json(o).dump());
+
+        o.name = name;
     }
 }
