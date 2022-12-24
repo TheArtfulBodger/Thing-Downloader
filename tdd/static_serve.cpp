@@ -7,7 +7,7 @@ ix::HttpResponsePtr static_serve(std::filesystem::path frontend_dir, ix::HttpReq
     std::shared_ptr<ix::ConnectionState> connectionState)
 {
     // Get Filename from URI
-    auto path = request->uri.substr(1, request->uri.find_first_of('?'));
+    auto path = request->uri.substr(1, request->uri.find_first_of('?') -1);
     auto fpath = frontend_dir / path;
 
     if (std::filesystem::is_directory(fpath)) {
