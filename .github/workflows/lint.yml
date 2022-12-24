@@ -59,7 +59,7 @@ jobs:
     - name: Get latest CMake and ninja
       uses: lukka/get-cmake@latest
     - name: Install Curl
-      run: sudo apt install -y libcurl4-openssl-dev libssl-dev
+      run: sudo apt update; sudo apt install -y libcurl4-openssl-dev libssl-dev
     - name: Generate Makefiles
       run: |
         mkdir _build;

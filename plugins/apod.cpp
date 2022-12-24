@@ -61,7 +61,7 @@ void process_job(const td::dl& base, const td::job& job)
         std::ofstream outfile(path / "data.json");
         outfile << json["data"];
         outfile.close();
-        job->set_complete(json.dump(), true);
+        job->set_complete(json.dump(), false);
     } else {
 
         auto uri = std::filesystem::path(json["url"].get<std::string>());
@@ -79,6 +79,7 @@ void process_job(const td::dl& base, const td::job& job)
 
         auto rsp = cpr::Get(cpr::Url { json["url"] },
             write_cb, prog_cb);
+        job->set_complete(json.dump(), false);
     }
 }
 

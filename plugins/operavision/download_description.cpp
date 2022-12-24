@@ -111,10 +111,16 @@ void download_description(const td::dl& base, const td::job& job)
     }
 
     // Write To Disk
-    auto folder = std::filesystem::path(base->get_outpath_folder()) / o.company / o.name;
-    auto outfile = folder / (o.slug + ".nfo");
+    std::string sanitised_company = o.company;
+    std::replace(sanitised_company.begin(), sanitised_company.end(), '/', '-');
+
+    std::string sanitised_name = o.name;
+    std::replace(sanitised_name.begin(), sanitised_name.end(), '/', '-');
+
+    auto folder = std::filesystem::path(base->get_outpath_folder()) / sanitised_company / sanitised_name;
     std::filesystem::create_directories(folder);
 
+    auto outfile = folder / (o.slug + ".nfo");
     xdoc.SaveFile(outfile.string().c_str());
 
     job->set_complete(job->get_job_data(), false);
